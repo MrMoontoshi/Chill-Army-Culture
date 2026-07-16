@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,6 @@
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -28,11 +27,6 @@
   </script>
 
   <style>
-    /* Custom transition for theme switching */
-    body {
-      transition: background-color 0.4s ease, color 0.4s ease;
-    }
-    
     /* Custom marquee animation */
     @keyframes marquee {
       0% { transform: translateX(0%); }
@@ -47,12 +41,12 @@
       animation-play-state: paused;
     }
     
-    /* Custom glowing shadow effects */
+    /* Custom glowing shadow effects for bright elements */
     .glow-green {
-      box-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
     }
     .glow-green-strong {
-      box-shadow: 0 0 35px rgba(74, 222, 128, 0.45);
+      box-shadow: 0 0 35px rgba(34, 197, 94, 0.4);
     }
     
     /* Smooth card hover lift */
@@ -63,8 +57,28 @@
       transform: translateY(-8px);
     }
   </style>
+
+  <script>
+    // Intelligent auto-fallback for mobile uploads
+    function handleImageError(imgElement, baseName) {
+      const extensions = ['.png', '.JPG', '.PNG', '.jpeg', '.JPEG', '.gif'];
+      const currentAttempt = parseInt(imgElement.getAttribute('data-attempt') || '0', 10);
+      
+      if (currentAttempt < extensions.length) {
+        imgElement.setAttribute('data-attempt', currentAttempt + 1);
+        imgElement.src = baseName + extensions[currentAttempt];
+      } else {
+        // Hide image and display custom layout fallback text
+        imgElement.style.display = 'none';
+        const fallbackContainer = imgElement.nextElementSibling;
+        if (fallbackContainer) {
+          fallbackContainer.classList.remove('hidden');
+        }
+      }
+    }
+  </script>
 </head>
-<body class="font-space bg-neutral-950 text-neutral-100 selection:bg-green-400 selection:text-neutral-950">
+<body class="font-space bg-neutral-50 text-neutral-900 selection:bg-green-400 selection:text-neutral-950">
 
   <!-- TOP BANNER RUNNING TEXT -->
   <div class="bg-green-400 text-neutral-950 py-2.5 overflow-hidden border-b-4 border-neutral-950 font-bold uppercase tracking-wider text-sm z-50 relative">
@@ -84,54 +98,46 @@
     </div>
   </div>
 
-  <!-- NAVIGATION BAR -->
-  <nav class="sticky top-0 z-40 bg-neutral-950/90 dark:bg-neutral-950/90 light-theme:bg-white/95 backdrop-blur-md border-b-4 border-neutral-950 py-4 px-4 sm:px-8 transition-colors">
+  <!-- NAVIGATION BAR (Bright background, no theme switcher) -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-neutral-950 py-4 px-4 sm:px-8">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       
       <!-- Brand Logo -->
       <a href="#" class="flex items-center gap-3">
-        <span class="font-bangers text-3xl sm:text-4xl tracking-wider text-green-400 drop-shadow-[0_2px_0_rgba(0,0,0,1)] uppercase">
+        <span class="font-bangers text-3xl sm:text-4xl tracking-wider text-green-600 drop-shadow-[0_2px_0_rgba(0,0,0,1)] uppercase">
           Chill Army
         </span>
       </a>
 
       <!-- Navigation links -->
       <div class="flex flex-wrap items-center justify-center gap-3 text-sm font-bold">
-        <a href="#about" class="px-3 py-1.5 hover:text-green-400 transition">Mission</a>
-        <a href="#lore" class="px-3 py-1.5 hover:text-green-400 transition">Chronicles</a>
-        <a href="#chart" class="px-3 py-1.5 hover:text-green-400 transition">Live Chart</a>
-        <a href="#tokenomics" class="px-3 py-1.5 hover:text-green-400 transition">Tokenomics</a>
+        <a href="#about" class="px-3 py-1.5 hover:text-green-600 transition">Mission</a>
+        <a href="#lore" class="px-3 py-1.5 hover:text-green-600 transition">Chronicles</a>
+        <a href="#chart" class="px-3 py-1.5 hover:text-green-600 transition">Live Chart</a>
+        <a href="#tokenomics" class="px-3 py-1.5 hover:text-green-600 transition">Tokenomics</a>
         
         <a href="https://jup.ag/tokens/57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd" target="_blank" rel="noopener noreferrer" class="bg-green-400 text-neutral-950 px-4 py-2 rounded-lg border-2 border-neutral-950 font-black hover:bg-green-300 transition uppercase tracking-tight">
           Buy Chill
         </a>
-        
-        <!-- Theme Toggle Button -->
-        <button id="themeToggle" class="bg-neutral-800 dark:bg-neutral-800 text-neutral-100 p-2.5 rounded-lg border-2 border-neutral-950 hover:bg-neutral-700 transition" aria-label="Toggle Theme">
-          <svg id="themeIcon" class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <!-- Sun icon path default -->
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
-          </svg>
-        </button>
       </div>
     </div>
   </nav>
 
   <!-- HERO SECTION WITH INTEGRATED MASCOT -->
-  <section class="relative py-16 sm:py-24 overflow-hidden border-b-4 border-neutral-950">
+  <section class="relative py-16 sm:py-24 overflow-hidden border-b-4 border-neutral-950 bg-white">
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
       
       <!-- Copy Details -->
       <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
-        <div class="inline-block bg-green-500/10 dark:bg-green-500/10 border-2 border-green-400 text-green-400 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
+        <div class="inline-block bg-green-100 border-2 border-green-500 text-green-700 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
           Active Campaign Running
         </div>
         
-        <h1 class="font-bangers text-6xl sm:text-8xl tracking-wide uppercase text-neutral-100 leading-none drop-shadow-[0_4px_0_rgba(74,222,128,0.5)]">
-          The Raid to Earn <span class="text-green-400 block sm:inline">Revolution</span>
+        <h1 class="font-bangers text-6xl sm:text-8xl tracking-wide uppercase text-neutral-950 leading-none drop-shadow-[0_4px_0_rgba(74,222,128,0.5)]">
+          The Raid to Earn <span class="text-green-600 block sm:inline">Revolution</span>
         </h1>
         
-        <p class="text-lg sm:text-xl text-neutral-300 max-w-2xl font-medium leading-relaxed">
+        <p class="text-lg sm:text-xl text-neutral-700 max-w-2xl font-medium leading-relaxed">
           We do not chase temporary hype and we do not support animal themed variations. We are the ultimate digital coordination protocol built entirely on Twitter coordination and organic community endurance.
         </p>
 
@@ -140,16 +146,16 @@
           <a href="https://dexscreener.com/solana/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD" target="_blank" rel="noopener noreferrer" class="bg-green-400 text-neutral-950 px-8 py-4 rounded-xl border-4 border-neutral-950 font-black text-lg hover:bg-green-300 transition hover-lift text-center uppercase tracking-tight">
             View Live Chart
           </a>
-          <a href="https://t.me/Chill_Culture_Army" target="_blank" rel="noopener noreferrer" class="bg-neutral-800 text-neutral-100 px-8 py-4 rounded-xl border-4 border-neutral-950 font-black text-lg hover:bg-neutral-700 transition hover-lift text-center uppercase tracking-tight">
+          <a href="https://t.me/Chill_Culture_Army" target="_blank" rel="noopener noreferrer" class="bg-neutral-850 text-white bg-neutral-900 px-8 py-4 rounded-xl border-4 border-neutral-950 font-black text-lg hover:bg-neutral-850 transition hover-lift text-center uppercase tracking-tight">
             Join Telegram
           </a>
         </div>
 
         <!-- Custom Copyable Contract Address -->
-        <div class="bg-neutral-900 border-4 border-neutral-950 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="bg-neutral-100 border-4 border-neutral-950 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
           <div class="text-center sm:text-left">
-            <span class="text-xs text-neutral-400 block uppercase font-bold tracking-widest">Solana Token Address</span>
-            <span id="caText" class="font-mono text-sm sm:text-base text-green-400 font-bold break-all">57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd</span>
+            <span class="text-xs text-neutral-500 block uppercase font-bold tracking-widest">Solana Token Address</span>
+            <span id="caText" class="font-mono text-sm sm:text-base text-green-700 font-bold break-all">57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd</span>
           </div>
           <button onclick="copyContractAddress()" class="w-full sm:w-auto bg-green-400 text-neutral-950 px-6 py-2.5 rounded-lg border-2 border-neutral-950 font-black text-sm uppercase hover:bg-green-300 active:scale-95 transition whitespace-nowrap">
             Copy Code
@@ -164,20 +170,20 @@
 
       <!-- Hero Mascot Image Component -->
       <div class="lg:col-span-5 flex justify-center">
-        <div class="relative w-full max-w-[340px] aspect-square rounded-2xl border-4 border-neutral-950 bg-neutral-900 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+        <div class="relative w-full max-w-[340px] aspect-square rounded-2xl border-4 border-neutral-950 bg-neutral-100 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
           <img 
             src="IMG_20260716_155333_268_2.jpg" 
             alt="Mascot Illustration" 
             class="w-full h-full object-cover rounded-lg"
-            onerror="this.style.display='none'; document.getElementById('heroFallback').classList.remove('hidden');"
+            onerror="handleImageError(this, 'IMG_20260716_155333_268_2')"
           />
           <!-- Backup Elegant Vector Artwork if direct file path resolves broken -->
-          <div id="heroFallback" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-neutral-900 p-6 text-center">
-            <div class="w-32 h-32 rounded-full border-4 border-green-400 flex items-center justify-center mb-4">
-              <span class="font-bangers text-6xl text-green-400">C</span>
+          <div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-neutral-100 p-6 text-center">
+            <div class="w-32 h-32 rounded-full border-4 border-green-500 flex items-center justify-center mb-4">
+              <span class="font-bangers text-6xl text-green-600">C</span>
             </div>
-            <h3 class="font-bangers text-2xl text-neutral-100 uppercase">Chill Mascot Active</h3>
-            <p class="text-xs text-neutral-400 mt-2 font-semibold">Image loading via local static path or fallback configuration</p>
+            <h3 class="font-bangers text-2xl text-neutral-900 uppercase">Chill Mascot Active</h3>
+            <p class="text-xs text-neutral-500 mt-2 font-semibold">Image loading via local static path or fallback configuration</p>
           </div>
         </div>
       </div>
@@ -186,40 +192,40 @@
   </section>
 
   <!-- QUICK FACTS TICKER GRID -->
-  <section class="bg-neutral-900 py-12 border-b-4 border-neutral-950">
+  <section class="bg-neutral-100 py-12 border-b-4 border-neutral-950">
     <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="p-6 bg-neutral-950 border-4 border-neutral-950 rounded-xl text-center shadow-[4px_4px_0px_0px_rgba(74,222,128,1)]">
-        <span class="block text-xs uppercase font-black text-green-400 tracking-wider">Total Available Supply</span>
+      <div class="p-6 bg-white border-4 border-neutral-950 rounded-xl text-center shadow-[4px_4px_0px_0px_rgba(34,197,94,1)]">
+        <span class="block text-xs uppercase font-black text-green-700 tracking-wider">Total Available Supply</span>
         <span class="block font-bangers text-4xl sm:text-5xl mt-2 tracking-wide">420,000,000</span>
       </div>
-      <div class="p-6 bg-neutral-950 border-4 border-neutral-950 rounded-xl text-center shadow-[4px_4px_0px_0px_rgba(74,222,128,1)]">
-        <span class="block text-xs uppercase font-black text-green-400 tracking-wider">Liquidity Status</span>
+      <div class="p-6 bg-white border-4 border-neutral-950 rounded-xl text-center shadow-[4px_4px_0px_0px_rgba(34,197,94,1)]">
+        <span class="block text-xs uppercase font-black text-green-700 tracking-wider">Liquidity Status</span>
         <span class="block font-bangers text-4xl sm:text-5xl mt-2 tracking-wide">100 Percent Locked</span>
       </div>
-      <div class="p-6 bg-neutral-950 border-4 border-neutral-950 rounded-xl text-center shadow-[4px_4px_0px_0px_rgba(74,222,128,1)]">
-        <span class="block text-xs uppercase font-black text-green-400 tracking-wider">System Utility</span>
+      <div class="p-6 bg-white border-4 border-neutral-950 rounded-xl text-center shadow-[4px_4px_0px_0px_rgba(34,197,94,1)]">
+        <span class="block text-xs uppercase font-black text-green-700 tracking-wider">System Utility</span>
         <span class="block font-bangers text-4xl sm:text-5xl mt-2 tracking-wide font-black">Raid To Earn</span>
       </div>
     </div>
   </section>
 
-  <!-- HIGH VISIBILITY LIVE CHART SECTION -->
-  <section id="chart" class="py-20 bg-neutral-950 border-b-4 border-neutral-950">
+  <!-- HIGH VISIBILITY LIVE CHART SECTION (Locked to Light Theme) -->
+  <section id="chart" class="py-20 bg-white border-b-4 border-neutral-950">
     <div class="max-w-6xl mx-auto px-4 space-y-8">
       
       <div class="text-center space-y-2">
-        <span class="text-green-400 text-xs font-black uppercase tracking-widest">Real Time Valuation Ledger</span>
-        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-100">Live Interactive Price Chart</h2>
-        <p class="text-neutral-400 text-base max-w-xl mx-auto">
+        <span class="text-green-600 text-xs font-black uppercase tracking-widest">Real Time Valuation Ledger</span>
+        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-950">Live Interactive Price Chart</h2>
+        <p class="text-neutral-600 text-base max-w-xl mx-auto">
           Monitor community progression and transaction activity as they happen directly on the blockchain.
         </p>
       </div>
 
-      <!-- Explicitly Sized Responsive Embedded Viewport Container -->
-      <div class="w-full h-[550px] md:h-[650px] rounded-2xl border-4 border-neutral-950 overflow-hidden shadow-[8px_8px_0px_0px_rgba(74,222,128,1)] bg-neutral-900 relative">
+      <!-- Explicitly Sized Responsive Embedded Viewport Container locked to light theme -->
+      <div class="w-full h-[550px] md:h-[650px] rounded-2xl border-4 border-neutral-950 overflow-hidden shadow-[8px_8px_0px_0px_rgba(34,197,94,1)] bg-neutral-100 relative">
         <iframe 
           id="dexscreener-chart"
-          src="https://dexscreener.com/solana/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD?embed=1&theme=dark&trades=0" 
+          src="https://dexscreener.com/solana/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD?embed=1&theme=light&trades=0" 
           class="absolute inset-0 w-full h-full border-0"
           allow="clipboard-write"
           allowfullscreen>
@@ -235,15 +241,15 @@
     </div>
   </section>
 
-  <!-- CHILL CHRONICLES SECTION (INTEGRATING ALL 4 UPLOADED IMAGES) -->
-  <section id="lore" class="py-20 bg-neutral-950 border-b-4 border-neutral-950">
+  <!-- CHILL CHRONICLES SECTION (INTEGRATING ALL 4 UPLOADED IMAGES WITH INTELLIGENT FALLBACKS) -->
+  <section id="lore" class="py-20 bg-white border-b-4 border-neutral-950">
     <div class="max-w-5xl mx-auto px-4 space-y-24">
       
       <!-- Section Intro Header -->
       <div class="text-center space-y-4">
-        <span class="text-green-400 text-sm font-black uppercase tracking-widest">Visual Field Reports</span>
-        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-100 tracking-wide">The Chronicles of Chill</h2>
-        <p class="text-neutral-400 max-w-xl mx-auto text-base">
+        <span class="text-green-600 text-sm font-black uppercase tracking-widest">Visual Field Reports</span>
+        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-950 tracking-wide">The Chronicles of Chill</h2>
+        <p class="text-neutral-600 max-w-xl mx-auto text-base">
           An in-depth graphic representation of what it truly means to hold strong, organize public waves, and cultivate relaxed coordination.
         </p>
       </div>
@@ -251,17 +257,26 @@
       <!-- IMAGE 1: REST AND COMPOUND -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-            <img src="1000293862.jpg" alt="Active resting state" class="w-full h-auto object-contain rounded-lg" />
+          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-neutral-100 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <img 
+              src="1000293862.jpg" 
+              alt="Active resting state" 
+              class="w-full h-auto object-contain rounded-lg" 
+              onerror="handleImageError(this, '1000293862')"
+            />
+            <div class="hidden text-center py-12 text-neutral-900">
+              <span class="font-bangers text-xl uppercase block">File Load Exception</span>
+              <span class="text-xs font-bold text-neutral-500 uppercase">Format check failed for sequence 862</span>
+            </div>
           </div>
         </div>
         <div class="lg:col-span-7 space-y-4 text-center lg:text-left">
-          <span class="text-green-400 text-xs font-black uppercase tracking-widest">Chronicle Chapter One</span>
-          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-100">The Power of Strategic Slumber</h3>
-          <p class="text-neutral-300 text-base leading-relaxed font-medium">
+          <span class="text-green-600 text-xs font-black uppercase tracking-widest">Chronicle Chapter One</span>
+          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-950">The Power of Strategic Slumber</h3>
+          <p class="text-neutral-700 text-base leading-relaxed font-medium">
             True coordination is not about constantly shouting in public channels. As seen in the report, maintaining high levels of internal calmness while keeping the vision fully focused allows the system to build pressure silently before we strike on social networks. 
           </p>
-          <p class="text-neutral-400 text-sm font-semibold">
+          <p class="text-neutral-500 text-sm font-semibold">
             Our operatives do not panic when the market moves. We sleep beautifully knowing the foundation is locked.
           </p>
         </div>
@@ -270,18 +285,27 @@
       <!-- IMAGE 2: ORGANIZED INTENT -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7 order-2 lg:order-1 space-y-4 text-center lg:text-left">
-          <span class="text-green-400 text-xs font-black uppercase tracking-widest">Chronicle Chapter Two</span>
-          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-100">Target Acquisition Strategy</h3>
-          <p class="text-neutral-300 text-base leading-relaxed font-medium">
+          <span class="text-green-600 text-xs font-black uppercase tracking-widest">Chronicle Chapter Two</span>
+          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-950">Target Acquisition Strategy</h3>
+          <p class="text-neutral-700 text-base leading-relaxed font-medium">
             When we target key social networks, we move collectively with extreme discipline. This segment demonstrates our alignment methods where every active profile participates in focusing social energy on verified objectives.
           </p>
-          <p class="text-neutral-400 text-sm font-semibold">
+          <p class="text-neutral-500 text-sm font-semibold">
             A single post receives thousandfold support within minutes, showing the reach of the organic protocol.
           </p>
         </div>
         <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center">
-          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-            <img src="1000293861.jpg" alt="Target acquired graphic" class="w-full h-auto object-contain rounded-lg" />
+          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-neutral-100 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <img 
+              src="1000293861.jpg" 
+              alt="Target acquired graphic" 
+              class="w-full h-auto object-contain rounded-lg" 
+              onerror="handleImageError(this, '1000293861')"
+            />
+            <div class="hidden text-center py-12 text-neutral-900">
+              <span class="font-bangers text-xl uppercase block">File Load Exception</span>
+              <span class="text-xs font-bold text-neutral-500 uppercase">Format check failed for sequence 861</span>
+            </div>
           </div>
         </div>
       </div>
@@ -289,17 +313,26 @@
       <!-- IMAGE 3: COORDINATED RAID WAVE -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-            <img src="1000293860.jpg" alt="Raid wave deployment" class="w-full h-auto object-contain rounded-lg" />
+          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-neutral-100 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <img 
+              src="1000293860.jpg" 
+              alt="Raid wave deployment" 
+              class="w-full h-auto object-contain rounded-lg" 
+              onerror="handleImageError(this, '1000293860')"
+            />
+            <div class="hidden text-center py-12 text-neutral-900">
+              <span class="font-bangers text-xl uppercase block">File Load Exception</span>
+              <span class="text-xs font-bold text-neutral-500 uppercase">Format check failed for sequence 860</span>
+            </div>
           </div>
         </div>
         <div class="lg:col-span-7 space-y-4 text-center lg:text-left">
-          <span class="text-green-400 text-xs font-black uppercase tracking-widest">Chronicle Chapter Three</span>
-          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-100">Executing Coordinated Waves</h3>
-          <p class="text-neutral-300 text-base leading-relaxed font-medium">
+          <span class="text-green-600 text-xs font-black uppercase tracking-widest">Chronicle Chapter Three</span>
+          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-950">Executing Coordinated Waves</h3>
+          <p class="text-neutral-700 text-base leading-relaxed font-medium">
             Our wave distribution structure is built on massive social action. We deploy clean visuals, positive community values, and constant encouragement without relying on spam.
           </p>
-          <p class="text-neutral-400 text-sm font-semibold">
+          <p class="text-neutral-500 text-sm font-semibold">
             This method guarantees permanent, highly resilient visibility across search indexes globally.
           </p>
         </div>
@@ -308,18 +341,27 @@
       <!-- IMAGE 4: THE ORGANIC LIFE BLUEPRINT -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7 order-2 lg:order-1 space-y-4 text-center lg:text-left">
-          <span class="text-green-400 text-xs font-black uppercase tracking-widest">Chronicle Chapter Four</span>
-          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-100">The Blueprint of Chill Living</h3>
-          <p class="text-neutral-300 text-base leading-relaxed font-medium">
+          <span class="text-green-600 text-xs font-black uppercase tracking-widest">Chronicle Chapter Four</span>
+          <h3 class="font-bangers text-3xl sm:text-4xl uppercase text-neutral-950">The Blueprint of Chill Living</h3>
+          <p class="text-neutral-700 text-base leading-relaxed font-medium">
             This final document shows our structural way of life. By removing anxiety, leaving behind complex financial stress, and coordinating on mutual milestones, we prove that decentralized systems can grow purely through community loyalty.
           </p>
-          <p class="text-neutral-400 text-sm font-semibold">
+          <p class="text-neutral-500 text-sm font-semibold">
             No rush, no emergency, just relaxed, calculated steps to absolute cultural alignment.
           </p>
         </div>
         <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center">
-          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-white p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-            <img src="1000293859.jpg" alt="Chill blueprint structural plan" class="w-full h-auto object-contain rounded-lg" />
+          <div class="w-full max-w-[340px] rounded-2xl border-4 border-neutral-950 bg-neutral-100 p-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <img 
+              src="1000293859.jpg" 
+              alt="Chill blueprint structural plan" 
+              class="w-full h-auto object-contain rounded-lg" 
+              onerror="handleImageError(this, '1000293859')"
+            />
+            <div class="hidden text-center py-12 text-neutral-900">
+              <span class="font-bangers text-xl uppercase block">File Load Exception</span>
+              <span class="text-xs font-bold text-neutral-500 uppercase">Format check failed for sequence 859</span>
+            </div>
           </div>
         </div>
       </div>
@@ -327,14 +369,14 @@
     </div>
   </section>
 
-  <!-- TOKENOMICS & SECURITY MATRICS -->
-  <section id="tokenomics" class="py-20 bg-neutral-900 border-b-4 border-neutral-950">
+  <!-- TOKENOMICS & SECURITY MATRICS (Bright/White Theme) -->
+  <section id="tokenomics" class="py-20 bg-neutral-100 border-b-4 border-neutral-950">
     <div class="max-w-5xl mx-auto px-4 space-y-12">
       
       <div class="text-center space-y-4">
-        <span class="text-green-400 text-xs font-black uppercase tracking-widest">Audited Specifications</span>
-        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-100">Verified Security Ledger</h2>
-        <p class="text-neutral-400 max-w-xl mx-auto text-base">
+        <span class="text-green-600 text-xs font-black uppercase tracking-widest">Audited Specifications</span>
+        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-950">Verified Security Ledger</h2>
+        <p class="text-neutral-600 max-w-xl mx-auto text-base">
           Transparency is our ultimate weapon. Here is the structural configuration of the token.
         </p>
       </div>
@@ -342,47 +384,47 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
         <!-- Token Details Card -->
-        <div class="bg-neutral-950 border-4 border-neutral-950 p-8 rounded-2xl shadow-[6px_6px_0px_0px_rgba(74,222,128,1)] space-y-6">
-          <h3 class="font-bangers text-2xl uppercase tracking-wider text-green-400">Ledger Metrics</h3>
+        <div class="bg-white border-4 border-neutral-950 p-8 rounded-2xl shadow-[6px_6px_0px_0px_rgba(34,197,94,1)] space-y-6">
+          <h3 class="font-bangers text-2xl uppercase tracking-wider text-green-600">Ledger Metrics</h3>
           
           <div class="space-y-4 font-semibold">
-            <div class="flex justify-between border-b border-neutral-800 pb-3">
-              <span class="text-neutral-400">Token Name</span>
-              <span class="text-neutral-100">Chill Culture</span>
+            <div class="flex justify-between border-b border-neutral-200 pb-3">
+              <span class="text-neutral-500">Token Name</span>
+              <span class="text-neutral-900">Chill Culture</span>
             </div>
-            <div class="flex justify-between border-b border-neutral-800 pb-3">
-              <span class="text-neutral-400">Ticker Symbol</span>
-              <span class="text-green-400">$CHILL</span>
+            <div class="flex justify-between border-b border-neutral-200 pb-3">
+              <span class="text-neutral-500">Ticker Symbol</span>
+              <span class="text-green-600">$CHILL</span>
             </div>
-            <div class="flex justify-between border-b border-neutral-800 pb-3">
-              <span class="text-neutral-400">Total Supply</span>
-              <span class="text-neutral-100">420,000,000 Tokens</span>
+            <div class="flex justify-between border-b border-neutral-200 pb-3">
+              <span class="text-neutral-500">Total Supply</span>
+              <span class="text-neutral-900">420,000,000 Tokens</span>
             </div>
-            <div class="flex justify-between border-b border-neutral-800 pb-3">
-              <span class="text-neutral-400">Network Standard</span>
-              <span class="text-neutral-100">Solana SPL Token</span>
+            <div class="flex justify-between border-b border-neutral-200 pb-3">
+              <span class="text-neutral-500">Network Standard</span>
+              <span class="text-neutral-900">Solana SPL Token</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-neutral-400">Transaction Surcharge</span>
-              <span class="text-neutral-100">Zero Tax</span>
+              <span class="text-neutral-500">Transaction Surcharge</span>
+              <span class="text-neutral-900">Zero Tax</span>
             </div>
           </div>
         </div>
 
         <!-- Security & Protection Card -->
-        <div class="bg-neutral-900 border-4 border-neutral-950 p-8 rounded-2xl shadow-[6px_6px_0px_0px_rgba(74,222,128,1)] space-y-6 flex flex-col justify-between">
+        <div class="bg-white border-4 border-neutral-950 p-8 rounded-2xl shadow-[6px_6px_0px_0px_rgba(34,197,94,1)] space-y-6 flex flex-col justify-between">
           <div class="space-y-4">
-            <h3 class="font-bangers text-2xl uppercase tracking-wider text-green-400">Contract Safeguards</h3>
-            <p class="text-neutral-300 text-sm leading-relaxed">
+            <h3 class="font-bangers text-2xl uppercase tracking-wider text-green-600">Contract Safeguards</h3>
+            <p class="text-neutral-700 text-sm leading-relaxed">
               To guarantee that the community stays secure, the total liquidity pools are certified and locked. There is no authority capable of manipulating the parameters of the smart contract.
             </p>
-            <p class="text-neutral-400 text-xs">
+            <p class="text-neutral-500 text-xs">
               Every token allocated to liquidity has been locked on verified decentralised platforms, preventing any possibility of structural instability.
             </p>
           </div>
 
           <div class="pt-6">
-            <a href="https://tools.smithii.io/token-vesting-certificate/chilldogs" target="_blank" rel="noopener noreferrer" class="w-full inline-block bg-neutral-950 text-green-400 text-center py-3.5 rounded-xl border-2 border-green-400 font-black uppercase text-sm hover:bg-green-400 hover:text-neutral-950 transition tracking-wider">
+            <a href="https://tools.smithii.io/token-vesting-certificate/chilldogs" target="_blank" rel="noopener noreferrer" class="w-full inline-block bg-neutral-950 text-green-400 text-center py-3.5 rounded-xl border-2 border-neutral-950 font-black uppercase text-sm hover:bg-neutral-800 hover:text-white transition tracking-wider">
               Verify Smithii Liquidity Lock
             </a>
           </div>
@@ -393,13 +435,13 @@
   </section>
 
   <!-- LORE DEEP DIVE SECTION (To increase page length) -->
-  <section id="about" class="py-20 bg-neutral-950 border-b-4 border-neutral-950">
+  <section id="about" class="py-20 bg-white border-b-4 border-neutral-950">
     <div class="max-w-4xl mx-auto px-4 space-y-12">
       
       <div class="text-center space-y-2">
-        <span class="text-green-400 text-xs font-black uppercase tracking-widest">Tactical Directives</span>
-        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-100">The Raid To Earn Playbook</h2>
-        <p class="text-neutral-400 text-base">
+        <span class="text-green-600 text-xs font-black uppercase tracking-widest">Tactical Directives</span>
+        <h2 class="font-bangers text-5xl sm:text-7xl uppercase text-neutral-950">The Raid To Earn Playbook</h2>
+        <p class="text-neutral-600 text-base">
           We operate with high discipline and strategic organization. Learn how the system functions.
         </p>
       </div>
@@ -407,39 +449,39 @@
       <div class="space-y-8 font-semibold">
         
         <!-- Step 1 -->
-        <div class="bg-neutral-900 border-4 border-neutral-950 p-6 rounded-xl flex gap-6 items-start">
+        <div class="bg-neutral-100 border-4 border-neutral-950 p-6 rounded-xl flex gap-6 items-start">
           <div class="bg-green-400 text-neutral-950 font-bangers text-3xl px-4 py-2 rounded-lg border-2 border-neutral-950">
             01
           </div>
           <div class="space-y-2">
-            <h4 class="text-xl uppercase text-neutral-100 font-bold">Secure Your Staking Unit</h4>
-            <p class="text-neutral-400 text-sm leading-relaxed">
+            <h4 class="text-xl uppercase text-neutral-950 font-bold">Secure Your Staking Unit</h4>
+            <p class="text-neutral-600 text-sm leading-relaxed">
               Acquire native tokens through authorized Solana protocols like Jupiter. This registers your identity as an active participant in the wider coordinate movement.
             </p>
           </div>
         </div>
 
         <!-- Step 2 -->
-        <div class="bg-neutral-900 border-4 border-neutral-950 p-6 rounded-xl flex gap-6 items-start">
+        <div class="bg-neutral-100 border-4 border-neutral-950 p-6 rounded-xl flex gap-6 items-start">
           <div class="bg-green-400 text-neutral-950 font-bangers text-3xl px-4 py-2 rounded-lg border-2 border-neutral-950">
             02
           </div>
           <div class="space-y-2">
-            <h4 class="text-xl uppercase text-neutral-100 font-bold">Monitor Coordinated Alerts</h4>
-            <p class="text-neutral-400 text-sm leading-relaxed">
+            <h4 class="text-xl uppercase text-neutral-950 font-bold">Monitor Coordinated Alerts</h4>
+            <p class="text-neutral-600 text-sm leading-relaxed">
               Our Telegram and Twitter command stations post target directions. Watch these sources closely to know where the immediate focus of the community is being directed.
             </p>
           </div>
         </div>
 
         <!-- Step 3 -->
-        <div class="bg-neutral-900 border-4 border-neutral-950 p-6 rounded-xl flex gap-6 items-start">
+        <div class="bg-neutral-100 border-4 border-neutral-950 p-6 rounded-xl flex gap-6 items-start">
           <div class="bg-green-400 text-neutral-950 font-bangers text-3xl px-4 py-2 rounded-lg border-2 border-neutral-950">
             03
           </div>
           <div class="space-y-2">
-            <h4 class="text-xl uppercase text-neutral-100 font-bold">Execute Massive Social Waves</h4>
-            <p class="text-neutral-400 text-sm leading-relaxed">
+            <h4 class="text-xl uppercase text-neutral-950 font-bold">Execute Massive Social Waves</h4>
+            <p class="text-neutral-600 text-sm leading-relaxed">
               Interact with target posts, publish cultural graphics, and flood the comment channels with positive structural coordination. This drives global metrics upward, rewarding holders organically.
             </p>
           </div>
@@ -450,10 +492,10 @@
   </section>
 
   <!-- BOTTOM STRATEGIC DISCLAIMER -->
-  <section class="bg-neutral-950 py-16 text-center border-b-4 border-neutral-950">
+  <section class="bg-white py-16 text-center border-b-4 border-neutral-950">
     <div class="max-w-3xl mx-auto px-4 space-y-6">
-      <h3 class="font-bangers text-3xl uppercase tracking-wider text-green-400">Strict Code Declaration</h3>
-      <p class="text-neutral-400 text-xs leading-relaxed uppercase tracking-wider">
+      <h3 class="font-bangers text-3xl uppercase tracking-wider text-green-600">Strict Code Declaration</h3>
+      <p class="text-neutral-500 text-xs leading-relaxed uppercase tracking-wider">
         Participation in decentralized asset ecosystems involves high structural volatility. Chill Culture represents an experimental, community-governed social coordination initiative. No financial guarantees are implied. Ensure you conduct diligent personal research before dedicating capital.
       </p>
     </div>
@@ -505,42 +547,6 @@
         toast.classList.add('opacity-0', 'translate-y-24', 'pointer-events-none');
       }, 3000);
     }
-
-    // Toggle Light and Dark Themes dynamically
-    const themeBtn = document.getElementById('themeToggle');
-    const htmlEl = document.documentElement;
-    const themeIcon = document.getElementById('themeIcon');
-    const chartIframe = document.getElementById('dexscreener-chart');
-
-    // Sun icon SVG path
-    const sunSVG = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />`;
-    
-    // Moon icon SVG path
-    const moonSVG = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />`;
-
-    themeBtn.addEventListener('click', () => {
-      let isDarkTheme = false;
-      
-      if (htmlEl.classList.contains('dark')) {
-        htmlEl.classList.remove('dark');
-        htmlEl.classList.add('light-theme');
-        // Switch icon to moon shape representing Light theme is active
-        themeIcon.innerHTML = moonSVG;
-        isDarkTheme = false;
-      } else {
-        htmlEl.classList.remove('light-theme');
-        htmlEl.classList.add('dark');
-        // Switch icon back to sun shape
-        themeIcon.innerHTML = sunSVG;
-        isDarkTheme = true;
-      }
-      
-      // Update Dexscreener iframe theme parameter dynamically on toggle
-      if (chartIframe) {
-        const themeParam = isDarkTheme ? 'dark' : 'light';
-        chartIframe.src = `https://dexscreener.com/solana/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD?embed=1&theme=${themeParam}&trades=0`;
-      }
-    });
   </script>
 </body>
 </html>
