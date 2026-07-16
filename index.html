@@ -1,1507 +1,438 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chill Culture Army - Raid & Earn! 🕶️</title>
-    <!-- Tailwind CSS -->
+    <title>Chill Culture Army</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for premium retro-comic aesthetics -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Press+Start+2P&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brandGreen: '#00ff66',
+                        brandPurple: '#a855f7',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #ffffff;
+            --border-color: #00ff66;
+            --card-bg: #111827;
+            --accent-color: #a855f7;
+            --text-muted: #9ca3af;
+            --light-border: #1f2937;
+        }
+
+        .light-theme {
+            --bg-color: #f3f4f6;
+            --text-color: #111827;
+            --border-color: #059669;
+            --card-bg: #ffffff;
+            --accent-color: #7c3aed;
+            --text-muted: #4b5563;
+            --light-border: #e5e7eb;
+        }
+
         body {
-            font-family: 'Fredoka', 'Comic Neue', cursive, sans-serif;
-            background-color: #f7f3eb;
-            background-image: radial-gradient(#e2dcd0 2px, transparent 2px);
-            background-size: 30px 30px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        .pixel-font {
-            font-family: 'Press Start 2P', monospace;
+        .meme-font {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 2px;
         }
 
-        /* Neo-brutalism Cartoon Borders */
-        .cartoon-border {
-            border: 4px solid #1a1a1a;
-            box-shadow: 6px 6px 0px #1a1a1a;
-            transition: all 0.2s ease;
+        .rainbow-text {
+            background-image: linear-gradient(to left, #ff00ff, #00ffff, #00ff00, #ffff00, #ff0000);
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 5s linear infinite;
+            background-size: 500% 100%;
         }
 
-        .cartoon-border:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0px #1a1a1a;
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
-        .cartoon-border:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px #1a1a1a;
+        .bounce-image {
+            animation: bounce 3s infinite alternate ease-in-out;
         }
 
-        /* Tape Reel Rotate Animation */
-        @keyframes spin-slow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .spin-active {
-            animation: spin-slow 2s linear infinite;
-        }
-        .spin-active-turbo {
-            animation: spin-slow 1s linear infinite;
+        @keyframes bounce {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            100% { transform: translateY(-20px) rotate(2deg); }
         }
 
-        /* Wiggle Animation for Buttons */
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-2deg); }
-            50% { transform: rotate(2deg); }
+        .scrolling-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            background: var(--border-color);
+            color: #000;
+            padding: 12px 0;
+            border-bottom: 4px solid var(--text-color);
+            border-top: 4px solid var(--text-color);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
         }
 
-        .wiggle-hover:hover {
-            animation: wiggle 0.25s ease-in-out infinite;
+        .scrolling-text {
+            display: inline-block;
+            animation: scroll 25s linear infinite;
+            font-size: 1.5rem;
+            font-weight: bold;
         }
 
-        /* Float Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(2deg); }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
-        .float {
-            animation: float 4s ease-in-out infinite;
+        .interactive-card {
+            background-color: var(--card-bg);
+            border: 4px solid var(--border-color);
+            transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 16px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-left: 4px solid #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #facc15;
-            border: 4px solid #1a1a1a;
-            border-radius: 8px;
+        .interactive-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 255, 102, 0.2);
         }
 
-        /* Beat flash animations for high voltage look */
-        .beat-flash {
-            animation: borderFlash 0.3s ease-out;
+        .gallery-grid-img {
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
 
-        @keyframes borderFlash {
-            0% { border-color: #ff0055; box-shadow: 0 0 15px #ff0055; }
-            100% { border-color: #1a1a1a; box-shadow: 6px 6px 0px #1a1a1a; }
+        .gallery-grid-img:hover {
+            transform: scale(1.05) rotate(1deg);
         }
     </style>
 </head>
-<body class="text-gray-900 selection:bg-yellow-300">
+<body class="selection:bg-green-500 selection:text-black">
 
-    <!-- Floating Background Memes -->
-    <div class="absolute top-20 left-10 opacity-10 pointer-events-none float select-none" style="animation-delay: 0s;">
-        <span class="text-7xl">🕶️</span>
-    </div>
-    <div class="absolute top-1/4 right-8 opacity-10 pointer-events-none float select-none" style="animation-delay: 1.5s;">
-        <span class="text-8xl">🐦</span>
-    </div>
-    <div class="absolute bottom-1/3 left-12 opacity-15 pointer-events-none float select-none" style="animation-delay: 3s;">
-        <span class="text-7xl">💰</span>
-    </div>
-
-    <!-- Hero Header -->
-    <header class="container mx-auto px-4 pt-12 pb-6 text-center relative">
-        <!-- Live Ticker Badge -->
-        <div class="inline-block cartoon-border bg-yellow-300 text-black px-6 py-2 rounded-full font-black text-sm uppercase tracking-wider mb-6 rotate-[-1.5deg]">
-            🚀 TICKER: $CHILL — RAID &amp; EARN WHILE CHILLING!
-        </div>
-
-        <!-- Super Title -->
-        <h1 class="text-5xl md:text-8xl font-black tracking-tight uppercase leading-none drop-shadow-sm select-none">
-            CHILL CULTURE <br class="hidden md:block">
-            <span class="text-amber-500 underline decoration-black decoration-wavy decoration-3">ARMY</span>
-        </h1>
-
-        <!-- Subtext -->
-        <p class="mt-6 text-xl md:text-2xl font-medium max-w-2xl mx-auto text-gray-700 leading-relaxed">
-            No work, no stress, no burnt pans. Just direct community raids on X and absolute leisure-mode gains! 🕶️🤙
-        </p>
-
-        <!-- Social Buttons Hub -->
-        <div class="flex flex-wrap justify-center gap-4 mt-8 max-w-4xl mx-auto">
-            <a href="https://x.com/Chill_Culture_X" target="_blank" class="cartoon-border wiggle-hover bg-[#1DA1F2] text-white px-6 py-4 rounded-2xl font-black text-lg flex items-center gap-3">
-                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-                RAID ON X
-            </a>
-            
-            <a href="https://t.me/Chill_Culture_Army" target="_blank" class="cartoon-border wiggle-hover bg-[#0088cc] text-white px-6 py-4 rounded-2xl font-black text-lg flex items-center gap-3">
-                <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.37.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
-                </svg>
-                JOIN THE LOUNGE
-            </a>
-
-            <a href="https://www.geckoterminal.com/solana/pools/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD" target="_blank" class="cartoon-border wiggle-hover bg-[#84cc16] text-white px-6 py-4 rounded-2xl font-black text-lg flex items-center gap-3">
-                🦎 GECKOTERMINAL CHART
-            </a>
-        </div>
-
-        <!-- -->
-        <!-- LO-FI & PUMP HOUSE BEAT RADIO -->
-        <div class="mt-12 max-w-2xl mx-auto">
-            <div id="radioContainer" class="cartoon-border bg-purple-100 rounded-3xl p-6 md:p-8 text-center relative overflow-hidden transition-all duration-300">
-                <span class="cartoon-border bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-black uppercase inline-block -rotate-1 mb-4">
-                    📻 PUMP &amp; CHILL SYNTHESIZER
-                </span>
-                <h3 class="text-2xl md:text-3xl font-black uppercase tracking-tight text-purple-950">
-                    HYPED CHILL DISCO RADIO
-                </h3>
-                <p class="text-xs text-purple-800 font-bold mb-6">
-                    Procedural Synthesizer. Turn on for an energetic, driving house beat recreation!
-                </p>
-
-                <!-- Cassette Box -->
-                <div class="bg-gray-900 rounded-2xl p-4 md:p-6 border-4 border-black shadow-[4px_4px_0px_#000] max-w-md mx-auto relative mb-6">
-                    <!-- Cassette Window with Tape Reels & Live Visualizer -->
-                    <div class="bg-gray-950 border-4 border-black rounded-xl p-4 flex justify-between items-center relative min-h-[100px] overflow-hidden">
-                        
-                        <!-- Visualizer Canvas Layer -->
-                        <canvas id="visualizerCanvas" class="absolute inset-0 w-full h-full opacity-40 pointer-events-none"></canvas>
-
-                        <!-- Left Reel -->
-                        <div id="reelLeft" class="w-16 h-16 rounded-full border-4 border-dashed border-purple-500 bg-gray-800 flex items-center justify-center transition-transform z-10">
-                            <div class="w-6 h-6 rounded-full bg-black border-2 border-white flex items-center justify-center">
-                                <span class="text-purple-400 text-[10px]">⚡</span>
-                            </div>
-                        </div>
-
-                        <!-- Tape center sticker -->
-                        <div class="text-center shrink-0 px-2 z-10 bg-gray-900/90 rounded-lg p-1 border border-gray-800">
-                            <span class="pixel-font text-[10px] text-purple-400 block tracking-widest animate-pulse" id="tapeStatus">PUMP IT!</span>
-                            <span class="text-[9px] text-gray-400 block font-mono" id="tempoText">BPM: 126</span>
-                        </div>
-
-                        <!-- Right Reel -->
-                        <div id="reelRight" class="w-16 h-16 rounded-full border-4 border-dashed border-purple-500 bg-gray-800 flex items-center justify-center transition-transform z-10">
-                            <div class="w-6 h-6 rounded-full bg-black border-2 border-white flex items-center justify-center">
-                                <span class="text-purple-400 text-[10px]">⚡</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Vinyl Crackle / Ambient Controls inside tape deck -->
-                    <div class="mt-4 flex justify-between items-center bg-gray-800 p-3 rounded-xl text-left border-2 border-black">
-                        <div>
-                            <span class="text-[10px] font-bold text-gray-300 block uppercase">Analog Grit / Crackle 📻</span>
-                            <span class="text-[9px] text-gray-400 block">Adding retro vinyl warmth</span>
-                        </div>
-                        <input type="range" id="crackleVolume" min="0" max="1" step="0.1" value="0.5" class="w-24 accent-purple-500 cursor-pointer">
-                    </div>
-                </div>
-
-                <!-- Radio Controls -->
-                <div class="flex flex-wrap gap-3 justify-center items-center">
-                    <button id="radioPlayBtn" onclick="toggleRadioPlay()" class="cartoon-border bg-yellow-400 hover:bg-yellow-300 text-black font-black px-6 py-3 rounded-2xl text-base flex items-center gap-2">
-                        <span>PUMP THE BEAT!</span> <span id="radioPlayIcon">▶️</span>
-                    </button>
-                    
-                    <button id="turboBtn" onclick="toggleTurboMode()" class="cartoon-border bg-pink-500 hover:bg-pink-400 text-white font-black px-4 py-3 rounded-2xl text-sm flex items-center gap-1">
-                        TURBO PUMP ⚡
-                    </button>
-                    
-                    <div class="flex items-center gap-2 bg-white/60 px-4 py-3 rounded-2xl border-2 border-black">
-                        <span class="text-xs font-bold text-gray-700">VOL</span>
-                        <input id="radioVolume" oninput="adjustRadioVolume(this.value)" type="range" min="0" max="1" step="0.1" value="0.75" class="w-20 accent-purple-600 cursor-pointer">
-                    </div>
-                </div>
-
-                <p id="radioStatus" class="text-xs text-purple-950 font-mono mt-4">Status: Synthesiser Offline. Click Pump to play the house hook!</p>
-            </div>
-        </div>
-
-        <!-- Smart CA Box with updated address -->
-        <div class="mt-8 max-w-xl mx-auto">
-            <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">👇 SOLANA CONTRACT ADDRESS 👇</p>
-            <div class="cartoon-border bg-white rounded-2xl p-3 flex flex-col sm:flex-row items-center gap-3">
-                <span id="caText" class="font-mono text-xs md:text-sm break-all font-bold text-emerald-600 px-3 select-all">57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd</span>
-                <button onclick="copyContractAddress()" id="copyBtn" class="w-full sm:w-auto shrink-0 cartoon-border bg-amber-400 hover:bg-amber-500 text-black px-4 py-2 rounded-xl font-bold text-xs transition-transform active:scale-95">
-                    COPY CA 📋
+    <nav class="fixed top-0 w-full z-50 bg-black/95 border-b-4 border-green-500 p-4 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-4">
+            <div class="flex items-center justify-between w-full lg:w-auto">
+                <a href="#" class="meme-font text-3xl text-green-500 tracking-widest hover:opacity-80 transition">
+                    $CHILL ARMY
+                </a>
+                <button onclick="toggleTheme()" class="lg:hidden bg-zinc-800 text-white p-2 rounded-xl border-2 border-green-500 font-bold hover:bg-zinc-700 transition">
+                    THEME
                 </button>
             </div>
-            <p id="copyFeedback" class="text-emerald-600 font-bold text-sm mt-2 h-5 opacity-0 transition-opacity duration-300">Address copied! Let's chill!</p>
+            
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-3">
+                <a href="https://jup.ag/tokens/57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd" target="_blank" class="bg-green-500 text-black px-3 py-2 rounded-xl font-bold uppercase hover:bg-green-400 transition transform hover:scale-105 text-sm sm:text-base">
+                    Buy on Jupiter
+                </a>
+                <a href="https://dexscreener.com/solana/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD" target="_blank" class="bg-purple-600 text-white px-3 py-2 rounded-xl font-bold uppercase hover:bg-purple-500 transition transform hover:scale-105 text-sm sm:text-base">
+                    Live Chart
+                </a>
+                <a href="https://tools.smithii.io/token-vesting-certificate/chilldogs" target="_blank" class="bg-blue-500 text-white px-3 py-2 rounded-xl font-bold uppercase hover:bg-blue-400 transition transform hover:scale-105 text-sm sm:text-base">
+                    Liquidity Lock
+                </a>
+                <a href="https://t.me/Chill_Culture_Army" target="_blank" class="bg-sky-500 text-white px-3 py-2 rounded-xl font-bold uppercase hover:bg-sky-400 transition transform hover:scale-105 text-sm sm:text-base">
+                    Telegram
+                </a>
+                <a href="https://x.com/Chill_Culture_X" target="_blank" class="bg-zinc-800 text-white px-3 py-2 rounded-xl font-bold uppercase border border-zinc-700 hover:bg-zinc-700 transition transform hover:scale-105 text-sm sm:text-base">
+                    Twitter X
+                </a>
+                <button onclick="toggleTheme()" class="hidden lg:block bg-zinc-800 text-white px-4 py-2 rounded-xl border-2 border-green-500 font-bold hover:bg-zinc-700 transition">
+                    TOGGLE THEME
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mt-40 sm:mt-28 scrolling-wrapper meme-font">
+        <div class="scrolling-text">
+            420,000,000 TOTAL SUPPLY LIQUIDITY LOCKED RAID TO EARN ENGINE ENGAGED NO COOLDOWNS CHILL HARD RAID HARDER FOR THE ARMY
+        </div>
+    </div>
+
+    <header class="py-16 px-4 text-center">
+        <h1 class="meme-font text-6xl sm:text-8xl mb-8 rainbow-text uppercase">
+            Chill Culture Army
+        </h1>
+        
+        <div class="flex justify-center mb-12">
+            <img src="IMG_20260716_155333_268_2.jpg" alt="Chill Mascot" onerror="this.src='https://placehold.co/400x400/10b981/ffffff?text=CHILL+ARMY'" class="bounce-image w-64 sm:w-96 rounded-3xl border-8 border-green-500 shadow-[0_0_50px_rgba(0,255,102,0.5)]">
+        </div>
+
+        <div class="max-w-3xl mx-auto interactive-card p-8 rounded-2xl transform rotate-1 shadow-2xl">
+            <h2 class="meme-font text-4xl text-green-400 mb-6">THE RAID TO EARN REVOLUTION</h2>
+            <p class="text-xl leading-relaxed font-bold mb-4">
+                We are definitely not a dog coin or a copycat project. Chill Culture Army is the ultimate community-driven movement built on raw coordination. We live by a simple formula: keep your calm, align the ranks, and push the narrative across the internet together.
+            </p>
+            <p class="text-xl leading-relaxed font-bold">
+                By participating in daily organized raids, community members directly expand our presence and earn their placement. This is decentralized momentum in its purest form.
+            </p>
         </div>
     </header>
 
-    <!-- Mascot Feature & Culture Definition -->
-    <section class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto cartoon-border bg-white rounded-3xl p-6 md:p-12 relative overflow-hidden">
-            <!-- Diagonal Banner -->
-            <div class="absolute top-0 right-0 bg-red-500 text-white font-black text-xs px-12 py-3 uppercase tracking-wider transform translate-x-12 translate-y-4 rotate-45 border-b-4 border-black">
-                OUR MASCOT!
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- -->
-                <!-- Mascot Image with Dynamic Speech Bubble & Backup Display -->
-                <div class="flex flex-col items-center justify-center relative bg-gray-50 rounded-2xl p-4 border-4 border-dashed border-gray-300 min-h-[380px]">
-                    
-                    <!-- Comic Text bubble -->
-                    <div id="mascotBubble" class="absolute -top-4 left-1/2 -translate-x-1/2 cartoon-border bg-yellow-100 text-black px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition-all duration-200 z-10">
-                        RAID ON X NOW! 🐦⚡
-                    </div>
-
-                    <!-- Proudly display mascot file with fallback rendering inside script -->
-                    <div class="relative w-full max-w-[280px] cursor-pointer select-none flex flex-col items-center justify-center" onclick="triggerMascotPhrase()">
-                        <img id="mascotMainImage" src="IMG_20260716_155333_268_2.jpg" alt="Chill Army Mascot" class="w-full h-auto object-contain rounded-xl border-4 border-black float shadow-md" onerror="handleImageError(this)">
-                        
-                        <!-- Premium Embedded SVG Mascot Backup that activates if standard image path fails in host environment -->
-                        <div id="mascotFallbackSVG" class="hidden w-full aspect-square max-w-[240px] bg-yellow-400 rounded-3xl border-4 border-black p-4 flex flex-col items-center justify-center relative float">
-                            <!-- Animated Mascot Sunglasses and Chef Hat Vector representation -->
-                            <div class="text-center font-bold text-black uppercase text-xs tracking-wider mb-2">CHILL GENERAL</div>
-                            <svg class="w-32 h-32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Chef Hat -->
-                                <path d="M35 38C35 28 42 22 50 22C58 22 65 28 65 38C65 42 63 45 60 47V52H40V47C37 45 35 42 35 38Z" fill="white" stroke="black" stroke-width="4" stroke-linejoin="round"/>
-                                <rect x="42" y="46" width="16" height="6" fill="#ef4444" stroke="black" stroke-width="2"/>
-                                <!-- Face Circle -->
-                                <circle cx="50" cy="65" r="22" fill="#fbcfe8" stroke="black" stroke-width="4"/>
-                                <!-- Famous Sunglasses -->
-                                <rect x="34" y="58" width="14" height="10" rx="3" fill="black" stroke="black" stroke-width="2"/>
-                                <rect x="52" y="58" width="14" height="10" rx="3" fill="black" stroke="black" stroke-width="2"/>
-                                <line x1="48" y1="62" x2="52" y2="62" stroke="black" stroke-width="3"/>
-                                <!-- Smiling lips -->
-                                <path d="M44 73C44 73 47 77 50 77C53 77 56 73 56 73" stroke="black" stroke-width="3" stroke-linecap="round"/>
-                            </svg>
-                            <span class="text-[10px] font-mono text-black font-black mt-2 bg-white px-2 py-0.5 rounded border border-black uppercase animate-pulse">VIBE STABLE</span>
-                        </div>
-                    </div>
-
-                    <!-- Mascot Explanation Card -->
-                    <div class="mt-4 text-center">
-                        <span class="pixel-font text-xs text-orange-500 font-bold block mb-1">THE PARADOX</span>
-                        <p class="text-xs text-gray-500 max-w-xs">
-                            "Yes, he has a chef hat. No, he does not cook. He's way too chill for labor. He just holds it to look busy!"
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Culture & Concept Definition -->
-                <div class="space-y-6">
-                    <h2 class="text-3xl md:text-5xl font-black uppercase text-gray-900 leading-none">
-                        RAID &amp; EARN<br><span class="text-yellow-500">WHILE CHILLING! 🛋️</span>
-                    </h2>
-
-                    <p class="text-lg text-gray-700">
-                        Why stress over complex utility tokens and high-stress charts? The <span class="font-bold text-amber-500">Chill Culture Army</span> operates on a simple golden rule: <span class="font-bold">Lie down, join the raid, and watch the community vibe together.</span>
+    <section class="py-12 px-4 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div class="interactive-card p-8 rounded-2xl">
+                <h3 class="meme-font text-4xl text-purple-400 mb-6 uppercase">THE CORE MANIFESTO</h3>
+                <div class="space-y-6 text-lg font-bold">
+                    <p>
+                        In a space filled with short lived noise, the Chill Culture Army stands apart. We understand that sustainable growth comes from the power of unified narrative building rather than temporary hype structures.
                     </p>
+                    <p>
+                        Our mission is to establish a strong, unbreakable cultural foundation on the Solana network. We prioritize calm strategy, creative content generation, and structured online raids to build a lasting presence that cannot be shaken by market waves.
+                    </p>
+                    <p>
+                        Every participant is an active builder. By maintaining our stance and coordinating our social efforts, we prove that an aligned, relaxed community is the strongest force in decentralized finance.
+                    </p>
+                </div>
+            </div>
 
-                    <!-- Bullet points with custom meme checkmarks -->
-                    <ul class="space-y-4 font-bold text-gray-800">
-                        <li class="flex items-center gap-3 bg-blue-50 p-3 rounded-xl border-2 border-black">
-                            <span class="text-3xl shrink-0">🐦</span>
-                            <span>Passive-Raiding: Tap to raid, get back to relaxing.</span>
-                        </li>
-                        <li class="flex items-center gap-3 bg-amber-50 p-3 rounded-xl border-2 border-black">
-                            <span class="text-3xl shrink-0">🍹</span>
-                            <span>No-Cooking Zone: Zero effort required to feel comfy.</span>
-                        </li>
-                        <li class="flex items-center gap-3 bg-emerald-50 p-3 rounded-xl border-2 border-black">
-                            <span class="text-3xl shrink-0">📈</span>
-                            <span>The $CHILL Culture: Pure vibes backing pure volume.</span>
-                        </li>
-                    </ul>
+            <div class="space-y-6">
+                <div class="p-6 bg-zinc-900/50 rounded-2xl border-l-8 border-green-500">
+                    <h4 class="meme-font text-2xl text-green-400 mb-2">ZERO HYSTERIA CORE</h4>
+                    <p class="font-bold">
+                        We do not panic and we do not chase random trends. We focus entirely on steady, long term community growth and cultural relevance.
+                    </p>
+                </div>
+                
+                <div class="p-6 bg-zinc-900/50 rounded-2xl border-l-8 border-purple-500">
+                    <h4 class="meme-font text-2xl text-purple-400 mb-2">RAW COORDINATION</h4>
+                    <p class="font-bold">
+                        Our strength lies in our collective voice. When the army raids, we make sure our message is seen across all social media platforms.
+                    </p>
+                </div>
 
-                    <!-- Funny Quote Box -->
-                    <div class="cartoon-border bg-black text-white p-4 rounded-2xl relative">
-                        <div class="absolute -top-3 left-4 bg-yellow-400 text-black text-xs font-black px-2 py-1 rounded border border-black uppercase">
-                            Army Motto
-                        </div>
-                        <p class="italic text-sm pt-2">
-                            "The chart rises when we raid. The chart rests when we chill. Both are winning strategies."
-                        </p>
-                    </div>
+                <div class="p-6 bg-zinc-900/50 rounded-2xl border-l-8 border-blue-500">
+                    <h4 class="meme-font text-2xl text-blue-400 mb-2 font-bold">CULTURAL UTILITY</h4>
+                    <p class="font-bold">
+                        We are building a culture that values community engagement, funny content, and true decentralization above all else.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Chill Raid Generator Hub -->
-    <section class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto cartoon-border bg-yellow-100 rounded-3xl p-6 md:p-8 text-center">
-            <span class="cartoon-border bg-amber-400 text-black px-4 py-1 rounded-full text-xs font-black uppercase inline-block -rotate-1">
-                ⚡ CHILL RAID STATION
-            </span>
-            <h2 class="text-3xl md:text-5xl font-black uppercase mt-3 tracking-wide">
-                GENERATE YOUR RAID SHOUT!
-            </h2>
-            <p class="text-gray-700 max-w-lg mx-auto text-sm mt-2">
-                Click to generate a perfectly formulated, zero-stress $CHILL raid message. Copy it, paste it on X, and keep relaxing.
-            </p>
+    <section class="py-12 bg-black/40 border-y-4 border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="meme-font text-5xl text-center mb-12 uppercase text-green-400">HOW RAID TO EARN WORKS</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="interactive-card p-8 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-green-500 text-black font-bold p-3 rounded-bl-xl text-lg">01</div>
+                    <h3 class="meme-font text-3xl mb-4">LOCATE TARGETS</h3>
+                    <p class="font-bold leading-relaxed text-gray-300">
+                        Our intelligence officers monitor the social landscape to find key discussions, high traffic accounts, and trending narratives where the presence of Chill can make the maximum impact.
+                    </p>
+                </div>
 
-            <div class="mt-6 bg-white cartoon-border rounded-2xl p-6 max-w-xl mx-auto text-left relative">
-                <span class="absolute top-2 right-3 text-xs font-bold text-gray-400 uppercase">Raid Template</span>
-                <p id="raidBoxText" class="font-bold text-gray-800 text-lg leading-relaxed pt-2">
-                    "Just checked my vibe levels and they are off the chart with $CHILL. No stress, just raiding with the army! 🕶️🚀 @Chill_Culture_X"
-                </p>
+                <div class="interactive-card p-8 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-purple-500 text-white font-bold p-3 rounded-bl-xl text-lg">02</div>
+                    <h3 class="meme-font text-3xl mb-4">DEPLOY MEMES</h3>
+                    <p class="font-bold leading-relaxed text-gray-300">
+                        Army units flood the targeted threads with original, high energy content and graphics. We bypass the boring spam and win through sheer humor, style, and relaxed attitude.
+                    </p>
+                </div>
 
-                <div class="flex flex-col sm:flex-row gap-3 mt-6">
-                    <button onclick="generateNewRaid()" class="flex-1 cartoon-border bg-orange-400 hover:bg-orange-500 text-black font-black py-3 rounded-xl text-sm transition-transform active:scale-95">
-                        ROLL NEW VIBE 🎲
-                    </button>
-                    <button onclick="copyRaidText()" id="raidCopyBtn" class="flex-1 cartoon-border bg-yellow-400 hover:bg-yellow-300 text-black font-black py-3 rounded-xl text-sm transition-transform active:scale-95">
-                        COPY RAID TEXT 📋
-                    </button>
+                <div class="interactive-card p-8 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-500 text-white font-bold p-3 rounded-bl-xl text-lg">03</div>
+                    <h3 class="meme-font text-3xl mb-4">DOMINATE THE SPACE</h3>
+                    <p class="font-bold leading-relaxed text-gray-300">
+                        As our comments gain massive visibility and likes, we create a continuous loop of organic interest that drives new members straight to our main Telegram and Twitter channels.
+                    </p>
                 </div>
             </div>
-            <p id="raidFeedback" class="text-emerald-600 font-bold text-sm mt-2 h-5 opacity-0 transition-opacity">Raid text copied! Go send it on X!</p>
         </div>
     </section>
 
-    <!-- Live Chart Frame Area -->
-    <section class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto cartoon-border bg-gray-900 rounded-3xl p-6 relative">
-            <div class="text-center mb-6">
-                <span class="cartoon-border bg-emerald-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase inline-block rotate-1">
-                    🟢 LIVE MARKET ACTIVITY
-                </span>
-                <h2 class="text-3xl md:text-5xl font-black uppercase mt-3 text-yellow-400 tracking-tight">
-                    $CHILL ARMY GRAPH
-                </h2>
-                <p class="text-gray-400 text-sm max-w-lg mx-auto mt-2">
-                    Live chart direct from GeckoTerminal. If the external widget fails to load due to iframe security policies, switch to our interactive simulated tracker!
-                </p>
-                
-                <!-- Chart Switcher Buttons -->
-                <div class="flex justify-center gap-2 mt-4">
-                    <button onclick="setChartType('gecko')" id="btnChartGecko" class="px-4 py-2 rounded-xl text-xs font-black uppercase border-2 border-black bg-yellow-400 text-black">
-                        Gecko Terminal Iframe
-                    </button>
-                    <button onclick="setChartType('sim')" id="btnChartSim" class="px-4 py-2 rounded-xl text-xs font-black uppercase border-2 border-black bg-gray-800 text-gray-300 hover:bg-gray-700">
-                        Simulated live chart (Always Works) 📈
-                    </button>
+    <section class="py-12 px-4 max-w-7xl mx-auto">
+        <h2 class="meme-font text-5xl text-center mb-4 uppercase">CHILL ARMY FIELD REPORTS</h2>
+        <p class="text-center font-bold text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
+            These are key images from our operations. Feel free to upload your own meme templates and edit these image paths inside your index file.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="interactive-card rounded-2xl overflow-hidden p-3 flex flex-col justify-between">
+                <div class="overflow-hidden rounded-xl border-4 border-zinc-700 bg-zinc-800 h-64 flex items-center justify-center">
+                    <img src="IMG_1.jpg" alt="Meme Field One" onerror="this.src='https://placehold.co/400x400/1e1b4b/00ff66?text=REPLACE+WITH+IMG_1.JPG'" class="gallery-grid-img w-full h-full object-cover">
+                </div>
+                <div class="pt-4 text-center">
+                    <h4 class="meme-font text-2xl text-green-400 mb-1">OPERATION COZY</h4>
+                    <p class="text-sm font-bold opacity-90">Securing positions on social channels with calm energy</p>
                 </div>
             </div>
 
-            <!-- Chart Box Container -->
-            <div class="w-full aspect-[16/10] min-h-[400px] md:min-h-[500px] rounded-2xl overflow-hidden border-4 border-black bg-black relative">
-                
-                <!-- Gecko Terminal Chart -->
-                <div id="chartGeckoContainer" class="w-full h-full">
-                    <iframe 
-                        id="geckoterminal-embed" 
-                        title="GeckoTerminal Embed" 
-                        src="https://www.geckoterminal.com/solana/pools/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD?embed=1&info=0&swaps=1&light_chart=0" 
-                        frameborder="0" 
-                        allow="clipboard-write" 
-                        allowfullscreen 
-                        class="w-full h-full"
-                        style="border: none;">
-                    </iframe>
+            <div class="interactive-card rounded-2xl overflow-hidden p-3 flex flex-col justify-between">
+                <div class="overflow-hidden rounded-xl border-4 border-zinc-700 bg-zinc-800 h-64 flex items-center justify-center">
+                    <img src="IMG_2.jpg" alt="Meme Field Two" onerror="this.src='https://placehold.co/400x400/311042/a855f7?text=REPLACE+WITH+IMG_2.JPG'" class="gallery-grid-img w-full h-full object-cover">
                 </div>
-
-                <!-- Custom Simulated High-Activity Chart Fallback -->
-                <div id="chartSimContainer" class="hidden w-full h-full p-4 flex flex-col justify-between">
-                    <div class="flex justify-between items-center bg-gray-800/80 p-3 rounded-xl border border-gray-700">
-                        <div>
-                            <span class="text-emerald-400 font-bold text-sm tracking-widest pixel-font block">SOLANA: $CHILL / SOL</span>
-                            <span class="text-[10px] text-gray-400 font-mono">Simulated Active Feed • 100% Guaranteed Visuals</span>
-                        </div>
-                        <div class="text-right">
-                            <span id="simPrice" class="text-emerald-400 font-black text-base md:text-lg pixel-font">$0.005412</span>
-                            <span class="text-xs text-emerald-400 block font-bold">+241.8% TODAY</span>
-                        </div>
-                    </div>
-
-                    <!-- Canvas of the interactive simulated chart -->
-                    <div class="flex-grow my-4 relative bg-gray-950 rounded-xl overflow-hidden border-2 border-gray-800">
-                        <canvas id="simChartCanvas" class="w-full h-full block"></canvas>
-                        <!-- Floating mock buyers popups -->
-                        <div id="buyerAlertBox" class="absolute bottom-4 left-4 right-4 bg-emerald-950/90 border border-emerald-500 rounded-lg p-2 flex items-center gap-2 text-xs text-emerald-300 transform translate-y-10 opacity-0 transition-all duration-300">
-                            <span class="bg-emerald-500 text-black font-black px-1.5 py-0.5 rounded text-[9px]">BUY</span>
-                            <span id="buyerAlertText" class="font-bold font-mono">SoL-Chil... bought 4.2 SOL ($CHILL)</span>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-800/80 p-3 rounded-xl border border-gray-700 flex justify-between items-center">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
-                            <span class="text-xs text-gray-300 font-bold uppercase tracking-wider">Live Sim Activity</span>
-                        </div>
-                        <button onclick="pumpSimPrice()" class="cartoon-border bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-1.5 rounded-lg text-xs font-bold transition-transform active:scale-95">
-                            PUMP CHART! 🟢
-                        </button>
-                    </div>
+                <div class="pt-4 text-center">
+                    <h4 class="meme-font text-2xl text-purple-400 mb-1">TACTICAL RAIDING</h4>
+                    <p class="text-sm font-bold opacity-90">Executing quick coordinated replies across major accounts</p>
                 </div>
             </div>
 
-            <div class="mt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-400 gap-2">
-                <span class="break-all text-left">Solana Token Address: 57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd</span>
-                <a href="https://www.geckoterminal.com/solana/pools/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD" target="_blank" class="text-yellow-400 underline font-bold hover:text-yellow-300 shrink-0">
-                    Open Pool Chart 🦎
+            <div class="interactive-card rounded-2xl overflow-hidden p-3 flex flex-col justify-between">
+                <div class="overflow-hidden rounded-xl border-4 border-zinc-700 bg-zinc-800 h-64 flex items-center justify-center">
+                    <img src="IMG_3.jpg" alt="Meme Field Three" onerror="this.src='https://placehold.co/400x400/0f172a/3b82f6?text=REPLACE+WITH+IMG_3.JPG'" class="gallery-grid-img w-full h-full object-cover">
+                </div>
+                <div class="pt-4 text-center">
+                    <h4 class="meme-font text-2xl text-blue-400 mb-1">CULTURE EXPANSION</h4>
+                    <p class="text-sm font-bold opacity-90">Deploying raw graphic designs directly to current trends</p>
+                </div>
+            </div>
+
+            <div class="interactive-card rounded-2xl overflow-hidden p-3 flex flex-col justify-between">
+                <div class="overflow-hidden rounded-xl border-4 border-zinc-700 bg-zinc-800 h-64 flex items-center justify-center">
+                    <img src="IMG_4.jpg" alt="Meme Field Four" onerror="this.src='https://placehold.co/400x400/022c22/10b981?text=REPLACE+WITH+IMG_4.JPG'" class="gallery-grid-img w-full h-full object-cover">
+                </div>
+                <div class="pt-4 text-center">
+                    <h4 class="meme-font text-2xl text-green-500 mb-1">ORGANIC FLOW</h4>
+                    <p class="text-sm font-bold opacity-90">Continuous growth driven strictly by active community members</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 max-w-7xl mx-auto w-full">
+        <h2 class="meme-font text-5xl text-center mb-8 uppercase text-purple-500">LIVE MARKET CHART</h2>
+        
+        <div class="w-full h-[600px] sm:h-[750px] rounded-3xl overflow-hidden border-8 border-purple-500 shadow-[0_0_40px_rgba(168,85,247,0.4)] relative bg-black">
+            <iframe 
+                src="https://dexscreener.com/solana/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD?embed=1&theme=dark&info=0" 
+                class="absolute top-0 left-0 w-full h-full border-0"
+                allow="clipboard-write"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </section>
+
+    <section class="py-12 px-4 max-w-7xl mx-auto">
+        <h2 class="meme-font text-5xl text-center mb-10 uppercase">TOKEN ALLOCATION</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="interactive-card p-8 rounded-2xl text-center">
+                <div class="meme-font text-4xl text-purple-400 mb-2">SUPPLY</div>
+                <div class="text-3xl font-bold">420,000,000</div>
+                <div class="text-sm mt-2 uppercase opacity-80">Hard Capped Limit</div>
+            </div>
+            
+            <div class="interactive-card p-8 rounded-2xl text-center">
+                <div class="meme-font text-4xl text-blue-400 mb-2">SECURITY</div>
+                <div class="text-2xl font-bold mb-4">Liquidity Locked</div>
+                <a href="https://tools.smithii.io/token-vesting-certificate/chilldogs" target="_blank" class="inline-block bg-blue-500 text-white px-6 py-2 rounded-xl font-bold hover:bg-blue-400 uppercase text-sm">
+                    Verify Lock
+                </a>
+            </div>
+
+            <div class="interactive-card p-8 rounded-2xl text-center">
+                <div class="meme-font text-4xl text-green-400 mb-2">TRADE</div>
+                <div class="text-2xl font-bold mb-4">Solana Mainnet</div>
+                <a href="https://jup.ag/tokens/57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd" target="_blank" class="inline-block bg-green-500 text-black px-6 py-2 rounded-xl font-bold hover:bg-green-400 uppercase text-sm">
+                    Open Jupiter
                 </a>
             </div>
         </div>
+        
+        <div class="mt-8 bg-zinc-900 border-4 border-zinc-700 p-4 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-4 transition-colors duration-400">
+            <div class="text-green-400 font-bold text-lg sm:text-xl break-all" id="contractAddress">
+                57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd
+            </div>
+            <button onclick="copyCA()" id="copyBtn" class="bg-white text-black meme-font text-2xl px-8 py-3 rounded-xl hover:bg-gray-300 transition w-full sm:w-auto">
+                COPY CA
+            </button>
+        </div>
     </section>
 
-    <!-- RETRO MINI-GAME: CHILL RAID CATCHER -->
-    <section class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto cartoon-border bg-[#101012] text-white rounded-3xl p-6 relative">
-            <div class="text-center mb-6">
-                <span class="cartoon-border bg-red-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase inline-block -rotate-1">
-                    🕹️ CASUAL ARCADE LOBBY
-                </span>
-                <h2 class="text-3xl md:text-5xl font-black uppercase mt-3 tracking-wide text-yellow-400">
-                    CHILL RAID CATCHER
-                </h2>
-                <p class="text-gray-400 text-sm max-w-xl mx-auto mt-2">
-                    Steer your Sunglasses Tray left or right! Catch Likes (🐦), Retweets (🔁), and $CHILL Bags (💰). Avoid Work (💼)!
+    <section class="py-12 px-4 max-w-7xl mx-auto">
+        <h2 class="meme-font text-5xl text-center mb-10 uppercase text-blue-400">TACTICAL GUIDANCE</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-8 rounded-2xl bg-zinc-900/40 border-2 border-zinc-700">
+                <h3 class="meme-font text-3xl text-green-400 mb-4">HOW TO PARTICIPATE EFFECTIVELY</h3>
+                <p class="font-bold leading-relaxed mb-4 text-gray-300">
+                    Being part of the army means taking direct action on daily calls. We run coordinated campaigns targeting key social accounts.
+                </p>
+                <p class="font-bold leading-relaxed text-gray-300">
+                    Always stay respectful but deeply engaging. We win through superior content, relaxed interaction patterns, and endless humor. Avoid direct spam and focus on highly relative comments.
                 </p>
             </div>
 
-            <!-- Game UI / Stats Bar -->
-            <div class="grid grid-cols-3 gap-2 max-w-lg mx-auto mb-4 bg-gray-800 p-3 rounded-xl border-2 border-gray-700 text-center text-xs md:text-sm font-bold">
-                <div>
-                    <span class="text-gray-400 block text-[10px]">RAID POINTS</span>
-                    <span id="gameScore" class="text-yellow-400 text-lg md:text-xl font-black">0</span>
-                </div>
-                <div>
-                    <span class="text-gray-400 block text-[10px]">RELAX LEVEL</span>
-                    <span id="gameLevel" class="text-green-400 text-lg md:text-xl font-black">1</span>
-                </div>
-                <div>
-                    <span class="text-gray-400 block text-[10px]">VIBE LIVES</span>
-                    <span id="gameLives" class="text-red-400 text-lg md:text-xl font-black">❤️❤️❤️</span>
-                </div>
-            </div>
-
-            <!-- Play Area Box -->
-            <div class="relative w-full aspect-[4/3] max-h-[400px] bg-gradient-to-b from-[#161a29] to-[#0d0d12] rounded-2xl overflow-hidden border-4 border-gray-700 touch-none" id="gameCanvasContainer">
-                
-                <!-- Start Overlay -->
-                <div id="gameStartOverlay" class="absolute inset-0 bg-black/85 flex flex-col items-center justify-center text-center p-6 z-20">
-                    <span class="text-5xl mb-4 animate-bounce">🕶️</span>
-                    <h3 class="text-2xl md:text-3xl font-black text-yellow-400 uppercase">CHILL RAID CATCHER</h3>
-                    <p class="text-gray-300 text-sm max-w-sm mt-2 mb-6">
-                        Support the Army! Catch the viral indicators to push $CHILL parameters up. Do not touch the heavy work folders!
-                    </p>
-                    <button onclick="startGame()" class="cartoon-border bg-yellow-400 hover:bg-yellow-500 text-black font-black px-8 py-3 rounded-xl text-lg transition-transform active:scale-95">
-                        ENTER THE LOUNGE 🚀
-                    </button>
-                </div>
-
-                <!-- Game Over Overlay -->
-                <div id="gameOverOverlay" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center text-center p-6 z-20 hidden">
-                    <span class="text-5xl mb-4">💤</span>
-                    <h3 class="text-3xl font-black text-red-500 uppercase">TOO MUCH WORK!</h3>
-                    <p class="text-gray-300 mt-2">You successfully caught this many raid points:</p>
-                    <div class="text-4xl font-black text-yellow-400 my-2" id="finalScoreDisplay">0</div>
-                    <p class="text-xs text-gray-500 mb-6">"Time to close the laptop and go back to doing nothing."</p>
-                    <button onclick="startGame()" class="cartoon-border bg-yellow-400 hover:bg-yellow-500 text-black font-black px-8 py-3 rounded-xl text-lg">
-                        CHILL AGAIN 🔄
-                    </button>
-                </div>
-
-                <!-- Mobile Left/Right Touch Controls -->
-                <div class="absolute bottom-0 left-0 top-1/2 w-1/4 h-1/2 bg-white/5 active:bg-white/10 flex items-center justify-center select-none cursor-pointer z-10 sm:hidden" id="touchLeftBtn">
-                    <span class="text-2xl text-white opacity-40">⬅️</span>
-                </div>
-                <div class="absolute bottom-0 right-0 top-1/2 w-1/4 h-1/2 bg-white/5 active:bg-white/10 flex items-center justify-center select-none cursor-pointer z-10 sm:hidden" id="touchRightBtn">
-                    <span class="text-2xl text-white opacity-40">➡️</span>
-                </div>
-
-                <!-- Game Playground -->
-                <div id="gamePlayground" class="absolute inset-0 select-none overflow-hidden">
-                    <!-- Sunglasses Player Plate -->
-                    <div id="playerPan" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-28 h-12 flex flex-col items-center justify-center transition-all duration-75">
-                        <!-- Sunglasses Graphic representation -->
-                        <div class="w-full h-5 bg-[#111] rounded-full border-2 border-yellow-400 flex items-center justify-around px-2 relative shadow-lg">
-                            <div class="w-8 h-3 bg-black/80 rounded-b"></div>
-                            <div class="w-2 h-1 bg-yellow-400"></div>
-                            <div class="w-8 h-3 bg-black/80 rounded-b"></div>
-                        </div>
-                        <div class="text-[10px] font-black text-yellow-400 tracking-wider mt-1">🕶️ CHILL TRAY</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Controller Tip -->
-            <div class="text-center mt-3 text-xs text-gray-500">
-                <span>Controls: Move mouse, swipe on screen, or use Arrow Keys (Left / Right).</span>
+            <div class="p-8 rounded-2xl bg-zinc-900/40 border-2 border-zinc-700">
+                <h3 class="meme-font text-3xl text-purple-400 mb-4">MAINTAINING COGNITIVE BALANCE</h3>
+                <p class="font-bold leading-relaxed mb-4 text-gray-300">
+                    Market volatility is natural. The core concept of being chill is remaining totally unbothered by temporary price action.
+                </p>
+                <p class="font-bold leading-relaxed text-gray-300">
+                    Keep your primary focus on the expansion of the community, creation of high grade media assets, and constant communication. We measure our success through the growth of the army.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- MEME SOUNDBOARD -->
-    <section class="container mx-auto px-4 py-8">
-        <div class="max-w-4xl mx-auto cartoon-border bg-amber-100 rounded-3xl p-6 md:p-8 text-center">
-            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight">
-                🗣️ ARMY QUOTEBOARD
-            </h2>
-            <p class="text-sm font-bold text-amber-800 uppercase tracking-wider mt-1">TAP TO TRIGGER VOICE BALLOONS AND LAZY RETRO WISDOM</p>
-            
-            <div class="flex flex-wrap justify-center gap-4 mt-6">
-                <button onclick="triggerQuote('raid')" class="cartoon-border bg-yellow-400 text-black font-black px-6 py-3 rounded-2xl text-base hover:bg-yellow-300">
-                    "RAID TARGET!" 🐦
-                </button>
-                <button onclick="triggerQuote('vibe')" class="cartoon-border bg-orange-500 text-white font-black px-6 py-3 rounded-2xl text-base hover:bg-orange-400">
-                    *STAY CHILL* 🍹
-                </button>
-                <button onclick="triggerQuote('moon')" class="cartoon-border bg-emerald-400 text-white font-black px-6 py-3 rounded-2xl text-base hover:bg-emerald-300">
-                    "SEND IT!" 📈
-                </button>
-                <button onclick="triggerQuote('earn')" class="cartoon-border bg-purple-500 text-white font-black px-6 py-3 rounded-2xl text-base hover:bg-purple-400">
-                    "EASY MONEY" 💰
-                </button>
-            </div>
+    <footer class="bg-black py-12 border-t-4 border-green-500 text-center mt-12 transition-colors duration-400">
+        <div class="meme-font text-4xl text-white mb-6">STAY CHILL AND RAID</div>
+        
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+            <a href="https://t.me/Chill_Culture_Army" target="_blank" class="bg-sky-500 text-white px-6 py-3 rounded-xl font-bold uppercase hover:bg-sky-400 transition w-64">
+                Telegram Channel
+            </a>
+            <a href="https://x.com/Chill_Culture_X" target="_blank" class="bg-zinc-800 text-white px-6 py-3 rounded-xl border border-zinc-700 font-bold uppercase hover:bg-zinc-700 transition w-64">
+                Twitter X
+            </a>
         </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="bg-black text-white mt-16 border-t-8 border-yellow-400">
-        <div class="container mx-auto px-4 py-12 text-center">
-            <div class="text-4xl md:text-6xl font-black uppercase text-yellow-400 mb-4 tracking-wider">
-                CHILL CULTURE ARMY
-            </div>
-            
-            <!-- Quick Links -->
-            <div class="flex justify-center gap-6 mb-8">
-                <a href="https://x.com/Chill_Culture_X" target="_blank" class="hover:text-yellow-400 transition-colors text-lg font-bold">X (Twitter)</a>
-                <span class="text-gray-700">•</span>
-                <a href="https://t.me/Chill_Culture_Army" target="_blank" class="hover:text-yellow-400 transition-colors text-lg font-bold">Telegram</a>
-                <span class="text-gray-700">•</span>
-                <a href="https://www.geckoterminal.com/solana/pools/FPQuRzxUBpSjYYTp2M934n4LPqdpWa4gWFgiATEsCYyD" target="_blank" class="hover:text-yellow-400 transition-colors text-lg font-bold">Live Chart</a>
-            </div>
-
-            <!-- Disclaimer Box -->
-            <div class="max-w-xl mx-auto bg-gray-900 border border-gray-800 p-6 rounded-2xl text-xs text-gray-400 leading-relaxed">
-                <p class="font-bold text-yellow-500 mb-2 uppercase tracking-widest text-[10px]">⚠️ DISCLAIMER ⚠️</p>
-                $CHILL (Chill Culture Army) is a highly entertaining, speculative meme token built on Solana. It is designed solely for community vibes, raiding, and relaxation. There is no expectation of financial reward or utility value. Vibe wisely and do your own research before joining the lounge!
-            </div>
-
-            <p class="mt-8 text-xs text-gray-600 font-mono">
-                © 2026 Chill Culture Army. Optimized for instant GitHub deployment.
-            </p>
-        </div>
+        <p class="text-gray-500 font-bold max-w-lg mx-auto px-4 uppercase text-sm">
+            This project is a decentralized community experiment based on action and culture. No financial advice.
+        </p>
     </footer>
 
-    <!-- INTERACTIVE SCRIPTS -->
     <script>
-        // Mascot interaction logic
-        const mascotQuotes = [
-            "Cooking? Never heard of her. I'm busy lounging. 🍹",
-            "Send that retweet on X right now! 🐦",
-            "$CHILL is the official standard of zero labor.",
-            "I only lift my arm to signal a buy order. 📈",
-            "Mascot duty is hard work... Just kidding, I'm sleeping. 💤",
-            "The green candles look amazing from this beach chair. 🕶️"
-        ];
-
-        // Safe Image Fallback Mechanism
-        function handleImageError(img) {
-            console.log("Mascot primary image failed to load or path is blocked, activating high-fidelity animated SVG backup!");
-            img.style.display = 'none';
-            document.getElementById('mascotFallbackSVG').classList.remove('hidden');
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('light-theme');
+            
+            const isLight = body.classList.contains('light-theme');
+            localStorage.setItem('chill-theme', isLight ? 'light' : 'dark');
         }
 
-        //        // Upgraded House Synthesizer Engine & Audio Visualizer
-        let audioCtx = null;
-        let isRadioPlaying = false;
-        let isTurbo = false;
-        let radioTempo = 126; // 126 BPM Classic House tempo
-        let nextNoteTime = 0.0;
-        let currentStep = 0;
-        let beatSchedulerInterval = null;
-        let masterGain = null;
-        let crackleGainNode = null;
-        let analyserNode = null;
-        let visualizerAnimationId = null;
-
-        // Custom "Pump It Up!" House bassline riff frequencies
-        // Driving, bouncy classic house hook sequence
-        const bassMelodyPattern = [
-            110.00, 110.00, 130.81, 146.83, // A2, A2, C3, D3
-            146.83, 146.83, 130.81, 110.00, // D3, D3, C3, A2
-            110.00, 110.00, 164.81, 146.83, // A2, A2, E3, D3
-            146.83, 146.83, 130.81, 110.00  // D3, D3, C3, A2
-        ];
-
-        function initAudioContext() {
-            if (audioCtx) return;
-            
-            // Create Audio Context
-            const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-            audioCtx = new AudioContextClass();
-            
-            // Master gain node
-            masterGain = audioCtx.createGain();
-            masterGain.gain.setValueAtTime(0.75, audioCtx.currentTime);
-
-            // Analyser node for the interactive real-time visualizer
-            analyserNode = audioCtx.createAnalyser();
-            analyserNode.fftSize = 64;
-            
-            // Connect chain
-            masterGain.connect(analyserNode);
-            analyserNode.connect(audioCtx.destination);
-
-            // Vinyl Crackle Noise Node
-            crackleGainNode = audioCtx.createGain();
-            const crackleVolInput = document.getElementById('crackleVolume');
-            crackleGainNode.gain.setValueAtTime(parseFloat(crackleVolInput.value) * 0.12, audioCtx.currentTime);
-            crackleGainNode.connect(masterGain);
-
-            startCrackleGenerator();
-            setupLiveVisualizer();
-
-            // Handle crackle slider change
-            crackleVolInput.addEventListener('input', (e) => {
-                if (crackleGainNode && audioCtx) {
-                    crackleGainNode.gain.setTargetAtTime(parseFloat(e.target.value) * 0.15, audioCtx.currentTime, 0.1);
-                }
-            });
-        }
-
-        // Generate warm analog-like crackle noise
-        function startCrackleGenerator() {
-            const bufferSize = audioCtx.sampleRate * 2; // 2 seconds of noise buffer
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            for (let i = 0; i < bufferSize; i++) {
-                // Background white/pink hiss
-                let hiss = (Math.random() * 2 - 1) * 0.05;
-                // Periodic crackle dust pops
-                let pop = 0;
-                if (Math.random() < 0.0003) {
-                    pop = (Math.random() * 2 - 1) * 0.7;
-                }
-                data[i] = hiss + pop;
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('chill-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
             }
+        });
 
-            const noiseSource = audioCtx.createBufferSource();
-            noiseSource.buffer = buffer;
-            noiseSource.loop = true;
-            noiseSource.connect(crackleGainNode);
-            noiseSource.start(0);
-        }
-
-        //        // HTML5 Canvas Audio Visualizer
-        function setupLiveVisualizer() {
-            const canvas = document.getElementById('visualizerCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const bufferLength = analyserNode.frequencyBinCount;
-            const dataArray = new Uint8Array(bufferLength);
-
-            function draw() {
-                visualizerAnimationId = requestAnimationFrame(draw);
-                if (!analyserNode) return;
-
-                analyserNode.getByteFrequencyData(dataArray);
-
-                // Clear canvas with trace effect
-                ctx.fillStyle = 'rgba(10, 10, 15, 0.3)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                const barWidth = (canvas.width / bufferLength) * 1.5;
-                let barHeight;
-                let x = 0;
-
-                for (let i = 0; i < bufferLength; i++) {
-                    barHeight = dataArray[i] * 0.45;
-
-                    // Create striking neon color gradient based on Turbo mode
-                    if (isTurbo) {
-                        ctx.fillStyle = `rgb(${barHeight + 150}, 20, 200)`;
-                    } else {
-                        ctx.fillStyle = `rgb(139, 92, 246)`; // Violet glow
-                    }
-
-                    ctx.fillRect(x, canvas.height - barHeight, barWidth - 2, barHeight);
-                    x += barWidth;
-                }
-            }
-
-            // Sync canvas sizing
-            const resizeVisualizer = () => {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            };
-            window.addEventListener('resize', resizeVisualizer);
-            resizeVisualizer();
-
-            draw();
-        }
-
-        // Toggle Procedural Music Playback
-        function toggleRadioPlay() {
-            initAudioContext();
-
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
-
-            const playBtn = document.getElementById('radioPlayBtn');
-            const playIcon = document.getElementById('radioPlayIcon');
-            const statusText = document.getElementById('radioStatus');
-            const tapeStatus = document.getElementById('tapeStatus');
-            const leftReel = document.getElementById('reelLeft');
-            const rightReel = document.getElementById('reelRight');
-
-            if (!isRadioPlaying) {
-                // Play music
-                isRadioPlaying = true;
-                playBtn.innerText = "STOP MUSIC";
-                playBtn.classList.replace('bg-yellow-400', 'bg-red-400');
-                playBtn.classList.add('text-white');
-                statusText.innerText = "Status: Pump It Up Disco Live! ⚡ Feel the driving retro basslines!";
-                tapeStatus.innerText = "PLAYING";
-                
-                leftReel.classList.add(isTurbo ? 'spin-active-turbo' : 'spin-active');
-                rightReel.classList.add(isTurbo ? 'spin-active-turbo' : 'spin-active');
-
-                currentStep = 0;
-                nextNoteTime = audioCtx.currentTime + 0.1;
-                
-                // Start scheduler
-                beatSchedulerInterval = setInterval(scheduler, 50);
-            } else {
-                // Pause music
-                isRadioPlaying = false;
-                playBtn.innerHTML = '<span>PUMP THE BEAT!</span> <span id="radioPlayIcon">▶️</span>';
-                playBtn.className = "cartoon-border bg-yellow-400 hover:bg-yellow-300 text-black font-black px-6 py-3 rounded-2xl text-base flex items-center gap-2";
-                statusText.innerText = "Status: Synthesiser Idle. Ready to raise the tempo!";
-                tapeStatus.innerText = "PAUSED";
-                
-                leftReel.classList.remove('spin-active', 'spin-active-turbo');
-                rightReel.classList.remove('spin-active', 'spin-active-turbo');
-
-                if (beatSchedulerInterval) {
-                    clearInterval(beatSchedulerInterval);
-                }
-            }
-        }
-
-        //        // Toggle the fast, intense rave TURBO MODE
-        function toggleTurboMode() {
-            isTurbo = !isTurbo;
-            const turboBtn = document.getElementById('turboBtn');
-            const tempoText = document.getElementById('tempoText');
-            const tapeStatus = document.getElementById('tapeStatus');
-            const radioContainer = document.getElementById('radioContainer');
-
-            const leftReel = document.getElementById('reelLeft');
-            const rightReel = document.getElementById('reelRight');
-
-            if (isTurbo) {
-                radioTempo = 132;
-                turboBtn.innerText = "NORMAL CHILL 🕶️";
-                turboBtn.classList.replace('bg-pink-500', 'bg-emerald-500');
-                tempoText.innerText = "BPM: 132 ⚡";
-                tapeStatus.innerText = "RAVE MODE!";
-                radioContainer.classList.add('bg-pink-100');
-                radioContainer.classList.remove('bg-purple-100');
-
-                if (isRadioPlaying) {
-                    leftReel.classList.remove('spin-active');
-                    leftReel.classList.add('spin-active-turbo');
-                    rightReel.classList.remove('spin-active');
-                    rightReel.classList.add('spin-active-turbo');
-                }
-
-                // Mascot reaction
-                const bubble = document.getElementById('mascotBubble');
-                bubble.innerText = "OH YEAH! PUMP IT UP!!! 🚀🔥";
-            } else {
-                radioTempo = 126;
-                turboBtn.innerText = "TURBO PUMP ⚡";
-                turboBtn.classList.replace('bg-emerald-500', 'bg-pink-500');
-                tempoText.innerText = "BPM: 126";
-                tapeStatus.innerText = "PLAYING";
-                radioContainer.classList.add('bg-purple-100');
-                radioContainer.classList.remove('bg-pink-100');
-
-                if (isRadioPlaying) {
-                    leftReel.classList.remove('spin-active-turbo');
-                    leftReel.classList.add('spin-active');
-                    rightReel.classList.remove('spin-active-turbo');
-                    rightReel.classList.add('spin-active');
-                }
-            }
-        }
-
-        function adjustRadioVolume(val) {
-            if (masterGain && audioCtx) {
-                masterGain.gain.setTargetAtTime(parseFloat(val) * 0.9, audioCtx.currentTime, 0.1);
-            }
-        }
-
-        // Scheduler tracks steps (16th notes sequencer)
-        function scheduler() {
-            while (nextNoteTime < audioCtx.currentTime + 0.1) {
-                scheduleBeat(currentStep, nextNoteTime);
-                advanceStep();
-            }
-        }
-
-        function advanceStep() {
-            const secondsPerBeat = 60.0 / radioTempo;
-            // Advance by sixteenth-note step (1/4th of a beat)
-            nextNoteTime += 0.25 * secondsPerBeat; 
-            currentStep = (currentStep + 1) % 16;
-        }
-
-        // Trigger synth frequencies and high energy loops
-        function scheduleBeat(step, time) {
-            // Visual pulse on major beats
-            if (step % 4 === 0) {
-                const container = document.getElementById('radioContainer');
-                if (container) {
-                    container.classList.add('beat-flash');
-                    setTimeout(() => container.classList.remove('beat-flash'), 150);
-                }
-            }
-
-            // 1. DRIVING DANCE KICK DRUM (Every Quarter Note: Step 0, 4, 8, 12)
-            if (step === 0 || step === 4 || step === 8 || step === 12) {
-                playPunchyKick(time);
-            }
-
-            // 2. DISCO CLAP / SNARE (On beats 2 and 4: Step 4, 12)
-            if (step === 4 || step === 12) {
-                playDiscoClap(time);
-            }
-
-            // 3. RETRO HOUSE OPEN HI-HAT (Offbeat Hi-Hats: Step 2, 6, 10, 14)
-            if (step === 2 || step === 6 || step === 10 || step === 14) {
-                playOpenHat(time);
-            }
-
-            // 4. "PUMP IT UP" HOUSE BASSLINE SYNTH (16th sequence)
-            const bassNoteFreq = bassMelodyPattern[step];
-            const synthVolume = isTurbo ? 0.32 : 0.22;
-            playBouncyBass(bassNoteFreq, time, 0.18, synthVolume);
-
-            // 5. IMPROVISED HIGHER LEAD CHORDS (Occasional upbeat hits)
-            if (step === 0 || step === 10) {
-                // Play shiny retro organ-style stab
-                playLeadStab(bassNoteFreq * 3, time, 0.25, 0.08); // Higher harmonic octave stab
-            }
-        }
-
-        // Upgraded punchy electronic synth components
-        function playPunchyKick(time) {
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            osc.type = 'sine';
-            // Classic heavy dance drum pitch sweep
-            osc.frequency.setValueAtTime(150, time);
-            osc.frequency.exponentialRampToValueAtTime(35, time + 0.18);
-            
-            gainNode.gain.setValueAtTime(0.8, time);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, time + 0.18);
-            
-            osc.connect(gainNode);
-            gainNode.connect(masterGain);
-            
-            osc.start(time);
-            osc.stop(time + 0.2);
-        }
-
-        function playDiscoClap(time) {
-            // White noise burst with envelope to simulate retro house claps
-            const bufferSize = audioCtx.sampleRate * 0.12; 
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = Math.random() * 2 - 1;
-            }
-            
-            const noise = audioCtx.createBufferSource();
-            noise.buffer = buffer;
-            
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(1100, time);
-            
-            const gainNode = audioCtx.createGain();
-            gainNode.gain.setValueAtTime(0.35, time);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, time + 0.11);
-            
-            noise.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(masterGain);
-            
-            noise.start(time);
-        }
-
-        function playOpenHat(time) {
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(12000, time); // High pitched hiss
-            
-            gainNode.gain.setValueAtTime(0.08, time);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, time + 0.14);
-            
-            osc.connect(gainNode);
-            gainNode.connect(masterGain);
-            
-            osc.start(time);
-            osc.stop(time + 0.15);
-        }
-
-        // Bouncy Analog-style Sawtooth Bass Synth
-        function playBouncyBass(freq, time, duration, vol) {
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            const filter = audioCtx.createBiquadFilter();
-            
-            osc.type = isTurbo ? 'sawtooth' : 'triangle'; 
-            osc.frequency.setValueAtTime(freq, time);
-
-            // House Detune
-            osc.detune.setValueAtTime(isTurbo ? 20 : 8, time);
-
-            // Filter cut-off envelope sweep for that signature house "squelch"
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(500, time);
-            filter.frequency.exponentialRampToValueAtTime(120, time + duration);
-            
-            gainNode.gain.setValueAtTime(vol, time);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, time + duration);
-
-            osc.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(masterGain);
-            
-            osc.start(time);
-            osc.stop(time + duration);
-        }
-
-        function playLeadStab(freq, time, duration, vol) {
-            const osc1 = audioCtx.createOscillator();
-            const osc2 = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            
-            osc1.type = 'sawtooth';
-            osc1.frequency.setValueAtTime(freq, time);
-            
-            osc2.type = 'triangle';
-            osc2.frequency.setValueAtTime(freq * 1.5, time); // Play a perfect fifth accent
-            
-            gainNode.gain.setValueAtTime(0, time);
-            gainNode.gain.linearRampToValueAtTime(vol, time + 0.02);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, time + duration);
-
-            osc1.connect(gainNode);
-            osc2.connect(gainNode);
-            gainNode.connect(masterGain);
-            
-            osc1.start(time);
-            osc2.start(time);
-            osc1.stop(time + duration);
-            osc2.stop(time + duration);
-        }
-
-        function triggerMascotPhrase() {
-            const bubble = document.getElementById('mascotBubble');
-            const randomPhrase = mascotQuotes[Math.floor(Math.random() * mascotQuotes.length)];
-            bubble.innerText = randomPhrase;
-            bubble.style.transform = 'translate(-50%, -10px) scale(1.05)';
-            setTimeout(() => {
-                bubble.style.transform = 'translate(-50%, 0) scale(1)';
-            }, 300);
-        }
-
-        // Raid Generation Templates
-        const raidPhrases = [
-            "Vibes are off the charts, passive bags are growing. Grab your sunglasses and buy $CHILL! 🕶️🚀 @Chill_Culture_X",
-            "Imagine working hard when you can literally raid and chill. Retweet if you love $CHILL! 🔁🔥 @Chill_Culture_X",
-            "Just checked my productivity app: 100% time spent lounging with the $CHILL Culture Army! 🛋️⭐ @Chill_Culture_X",
-            "The Solana army is rallying. Zero stress, pure momentum, send it now! 🚀📈 @Chill_Culture_X",
-            "No frying pans, no burnt charts, just $CHILL community making pure history! 🕶️💎 @Chill_Culture_X"
-        ];
-
-        function generateNewRaid() {
-            const index = Math.floor(Math.random() * raidPhrases.length);
-            document.getElementById('raidBoxText').innerText = raidPhrases[index];
-        }
-
-        function copyRaidText() {
-            const text = document.getElementById('raidBoxText').innerText;
-            const tempInput = document.createElement("textarea");
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-
-            const feedback = document.getElementById('raidFeedback');
-            const btn = document.getElementById('raidCopyBtn');
-            btn.innerText = "COPIED! 🔥";
-            feedback.style.opacity = '1';
-            
-            setTimeout(() => {
-                feedback.style.opacity = '0';
-                btn.innerText = "COPY RAID TEXT 📋";
-            }, 2000);
-        }
-
-        function copyContractAddress() {
-            const caText = document.getElementById('caText').innerText;
+        function copyCA() {
+            const ca = "57rzefwiHt6cM5ek8z9A6pZSJrM6mqrLTcb7vmYriPDd";
             const tempInput = document.createElement("input");
-            tempInput.value = caText;
+            tempInput.value = ca;
             document.body.appendChild(tempInput);
             tempInput.select();
             document.execCommand("copy");
             document.body.removeChild(tempInput);
-
-            const feedback = document.getElementById('copyFeedback');
-            const btn = document.getElementById('copyBtn');
-            btn.innerText = "COPIED! 🔥";
-            btn.classList.replace('bg-amber-400', 'bg-green-400');
-            feedback.style.opacity = '1';
+            
+            const btn = document.getElementById("copyBtn");
+            btn.innerText = "COPIED";
+            btn.classList.replace("bg-white", "bg-green-500");
             
             setTimeout(() => {
-                feedback.style.opacity = '0';
-                btn.innerText = "COPY CA 📋";
-                btn.classList.replace('bg-green-400', 'bg-amber-400');
-            }, 2500);
-        }
-
-        // Soundboard audio controller mappings
-        const soundboardVocals = {
-            'raid': "RAID ACTION IN PROGRESS! 🐦",
-            'vibe': "STAY CHILL OUT THERE! 🕶️",
-            'moon': "SENDING CHART TO MOON! 📈",
-            'earn': "EASY PASSIVE INCOME! 💰"
-        };
-
-        function triggerQuote(key) {
-            const bubble = document.getElementById('mascotBubble');
-            bubble.innerText = soundboardVocals[key];
-        }
-
-        // DUAL CHART LOGIC
-        let chartType = 'gecko';
-        let candles = [];
-        let simPriceValue = 0.005412;
-        let simCanvas = null;
-        let simCtx = null;
-        let simInterval = null;
-
-        function setChartType(type) {
-            chartType = type;
-            const btnGecko = document.getElementById('btnChartGecko');
-            const btnSim = document.getElementById('btnChartSim');
-            const boxGecko = document.getElementById('chartGeckoContainer');
-            const boxSim = document.getElementById('chartSimContainer');
-
-            if (type === 'gecko') {
-                btnGecko.className = "px-4 py-2 rounded-xl text-xs font-black uppercase border-2 border-black bg-yellow-400 text-black";
-                btnSim.className = "px-4 py-2 rounded-xl text-xs font-black uppercase border-2 border-black bg-gray-800 text-gray-300 hover:bg-gray-700";
-                boxGecko.classList.remove('hidden');
-                boxSim.classList.add('hidden');
-                if (simInterval) clearInterval(simInterval);
-            } else {
-                btnSim.className = "px-4 py-2 rounded-xl text-xs font-black uppercase border-2 border-black bg-yellow-400 text-black";
-                btnGecko.className = "px-4 py-2 rounded-xl text-xs font-black uppercase border-2 border-black bg-gray-800 text-gray-300 hover:bg-gray-700";
-                boxGecko.classList.add('hidden');
-                boxSim.classList.remove('hidden');
-                initSimulatedChart();
-            }
-        }
-
-        function initSimulatedChart() {
-            simCanvas = document.getElementById('simChartCanvas');
-            simCtx = simCanvas.getContext('2d');
-            
-            // Handle fluid width resize
-            const resizeCanvas = () => {
-                const rect = simCanvas.parentNode.getBoundingClientRect();
-                simCanvas.width = rect.width;
-                simCanvas.height = rect.height;
-                drawSimChart();
-            };
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            // Populate initial candle history data
-            if (candles.length === 0) {
-                let startPrice = 0.0012;
-                for (let i = 0; i < 40; i++) {
-                    const change = (Math.random() - 0.38) * 0.0004; // upwards trend
-                    const open = startPrice;
-                    const close = startPrice + change;
-                    const high = Math.max(open, close) + Math.random() * 0.0002;
-                    const low = Math.min(open, close) - Math.random() * 0.0002;
-                    candles.push({ open, close, high, low });
-                    startPrice = close;
-                }
-                simPriceValue = startPrice;
-            }
-
-            if (simInterval) clearInterval(simInterval);
-            simInterval = setInterval(() => {
-                // Generate step
-                const lastCandle = candles[candles.length - 1];
-                const change = (Math.random() - 0.42) * 0.0005; // biased upwards
-                const open = lastCandle.close;
-                const close = open + change;
-                const high = Math.max(open, close) + Math.random() * 0.0003;
-                const low = Math.min(open, close) - Math.random() * 0.0003;
-
-                candles.shift();
-                candles.push({ open, close, high, low });
-                simPriceValue = close;
-                
-                document.getElementById('simPrice').innerText = `$${simPriceValue.toFixed(6)}`;
-                
-                // Show floating buyer pops occasionally
-                if (Math.random() < 0.25) {
-                    showSimBuyerAlert();
-                }
-
-                drawSimChart();
-            }, 2500);
-        }
-
-        function drawSimChart() {
-            if (!simCtx || !simCanvas) return;
-            const w = simCanvas.width;
-            const h = simCanvas.height;
-            simCtx.clearRect(0, 0, w, h);
-
-            // Draw grid
-            simCtx.strokeStyle = '#1e293b';
-            simCtx.lineWidth = 1;
-            for (let i = 1; i < 5; i++) {
-                const y = (h / 5) * i;
-                simCtx.beginPath();
-                simCtx.moveTo(0, y);
-                simCtx.lineTo(w, y);
-                simCtx.stroke();
-            }
-
-            const paddingLeft = 40;
-            const paddingRight = 40;
-            const chartWidth = w - paddingLeft - paddingRight;
-            const cWidth = chartWidth / candles.length;
-
-            // Find min & max price bounds
-            let minPrice = Infinity;
-            let maxPrice = -Infinity;
-            candles.forEach(c => {
-                if (c.low < minPrice) minPrice = c.low;
-                if (c.high > maxPrice) maxPrice = c.high;
-            });
-
-            // Draw lines/candles
-            candles.forEach((c, index) => {
-                const isGreen = c.close >= c.open;
-                simCtx.strokeStyle = isGreen ? '#10b981' : '#ef4444';
-                simCtx.fillStyle = isGreen ? '#10b981' : '#ef4444';
-                simCtx.lineWidth = 2;
-
-                const getX = (idx) => paddingLeft + idx * cWidth + cWidth / 2;
-                const getY = (price) => h - 30 - ((price - minPrice) / (maxPrice - minPrice)) * (h - 60);
-
-                const x = getX(index);
-                const yHigh = getY(c.high);
-                const yLow = getY(c.low);
-                const yOpen = getY(c.open);
-                const yClose = getY(c.close);
-
-                // Draw wick line
-                simCtx.beginPath();
-                simCtx.moveTo(x, yHigh);
-                simCtx.lineTo(x, yLow);
-                simCtx.stroke();
-
-                // Draw candle body box
-                const bodyW = Math.max(3, cWidth * 0.7);
-                const bodyH = Math.max(2, Math.abs(yClose - yOpen));
-                const bodyY = Math.min(yOpen, yClose);
-                simCtx.fillRect(x - bodyW / 2, bodyY, bodyW, bodyH);
-            });
-        }
-
-        const buyersMemeList = [
-            "ChillChef... bought 3.5 SOL 🥐",
-            "X_Raid_King... bought 12 SOL 🐦",
-            "MemeGod69... bought 8.4 SOL 💸",
-            "ZeroWorkFella... bought 5.5 SOL 🛋️",
-            "LoungeMaster... bought 15 SOL 🍹",
-            "CandleWatcher... bought 6.2 SOL 📈"
-        ];
-
-        function showSimBuyerAlert() {
-            const alertBox = document.getElementById('buyerAlertBox');
-            const alertText = document.getElementById('buyerAlertText');
-            const randomBuyer = buyersMemeList[Math.floor(Math.random() * buyersMemeList.length)];
-            
-            alertText.innerText = randomBuyer;
-            alertBox.classList.remove('translate-y-10', 'opacity-0');
-            alertBox.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                alertBox.classList.remove('translate-y-0', 'opacity-100');
-                alertBox.classList.add('translate-y-10', 'opacity-0');
-            }, 3000);
-        }
-
-        function pumpSimPrice() {
-            if (candles.length === 0) return;
-            const lastCandle = candles[candles.length - 1];
-            // Enormous mega green candle
-            const open = lastCandle.close;
-            const close = open + 0.0015;
-            const high = close + 0.0003;
-            const low = open - 0.0001;
-
-            candles.shift();
-            candles.push({ open, close, high, low });
-            simPriceValue = close;
-            
-            document.getElementById('simPrice').innerText = `$${simPriceValue.toFixed(6)}`;
-            drawSimChart();
-
-            // Trigger mascot joy
-            const bubble = document.getElementById('mascotBubble');
-            bubble.innerText = "OH GEEZ! MASSIVE CANDLE! 🚀🔥";
-        }
-
-        // Arcade game logic setup
-        let gameRunning = false;
-        let score = 0;
-        let level = 1;
-        let lives = 3;
-        let spawnInterval = null;
-        let gameLoopInterval = null;
-        let activeElements = [];
-        let playerX = 50; 
-        let speedMultiplier = 1;
-
-        const playground = document.getElementById('gamePlayground');
-        const playerPan = document.getElementById('playerPan');
-        const gameCanvasContainer = document.getElementById('gameCanvasContainer');
-
-        let keysPressed = {};
-        window.addEventListener('keydown', (e) => {
-            if (!gameRunning) return;
-            keysPressed[e.key] = true;
-        });
-        window.addEventListener('keyup', (e) => {
-            keysPressed[e.key] = false;
-        });
-
-        // Touch systems
-        const touchLeftBtn = document.getElementById('touchLeftBtn');
-        const touchRightBtn = document.getElementById('touchRightBtn');
-
-        let touchInterval = null;
-        function setupTouchControl(btn, dir) {
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                if (!gameRunning) return;
-                if (touchInterval) clearInterval(touchInterval);
-                touchInterval = setInterval(() => {
-                    movePlayer(dir * 3.5);
-                }, 16);
-            });
-            btn.addEventListener('touchend', () => {
-                if (touchInterval) {
-                    clearInterval(touchInterval);
-                    touchInterval = null;
-                }
-            });
-        }
-        setupTouchControl(touchLeftBtn, -1);
-        setupTouchControl(touchRightBtn, 1);
-
-        gameCanvasContainer.addEventListener('mousemove', (e) => {
-            if (!gameRunning) return;
-            const rect = gameCanvasContainer.getBoundingClientRect();
-            const relativeX = ((e.clientX - rect.left) / rect.width) * 100;
-            setPlayerPosition(relativeX);
-        });
-
-        gameCanvasContainer.addEventListener('touchmove', (e) => {
-            if (!gameRunning) return;
-            const rect = gameCanvasContainer.getBoundingClientRect();
-            if (e.touches.length > 0) {
-                const relativeX = ((e.touches[0].clientX - rect.left) / rect.width) * 100;
-                setPlayerPosition(relativeX);
-            }
-        });
-
-        function setPlayerPosition(targetPercent) {
-            playerX = Math.max(10, Math.min(90, targetPercent));
-            playerPan.style.left = `${playerX}%`;
-        }
-
-        function movePlayer(delta) {
-            setPlayerPosition(playerX + delta);
-        }
-
-        function startGame() {
-            document.getElementById('gameStartOverlay').classList.add('hidden');
-            document.getElementById('gameOverOverlay').classList.add('hidden');
-
-            activeElements.forEach(el => el.dom.remove());
-            activeElements = [];
-
-            score = 0;
-            level = 1;
-            lives = 3;
-            speedMultiplier = 1.0;
-            updateGameStats();
-
-            gameRunning = true;
-
-            if (spawnInterval) clearInterval(spawnInterval);
-            if (gameLoopInterval) clearInterval(gameLoopInterval);
-
-            spawnInterval = setInterval(() => {
-                if (gameRunning) spawnEntity();
-            }, 850);
-
-            gameLoopInterval = setInterval(gameTick, 1000 / 60);
-        }
-
-        function spawnEntity() {
-            const types = [
-                { emoji: '🐦', isGood: true, text: 'Like' },
-                { emoji: '🔁', isGood: true, text: 'RT' },
-                { emoji: '💰', isGood: true, text: '$CHILL' },
-                { emoji: '💼', isGood: false, text: 'Work' }
-            ];
-            
-            const selected = types[Math.floor(Math.random() * types.length)];
-            
-            const entity = document.createElement('div');
-            entity.className = 'absolute text-3xl select-none transition-transform duration-75';
-            entity.innerHTML = selected.emoji;
-            
-            const randomX = Math.random() * 80 + 10;
-            entity.style.left = `${randomX}%`;
-            entity.style.top = '-30px';
-            
-            playground.appendChild(entity);
-            
-            activeElements.push({
-                dom: entity,
-                x: randomX,
-                y: -30,
-                isGood: selected.isGood,
-                scoreValue: selected.isGood ? 10 : -20,
-                rotation: 0,
-                spinSpeed: (Math.random() - 0.5) * 6
-            });
-        }
-
-        function gameTick() {
-            if (!gameRunning) return;
-
-            if (keysPressed['ArrowLeft'] || keysPressed['a'] || keysPressed['A']) {
-                movePlayer(-2.8);
-            }
-            if (keysPressed['ArrowRight'] || keysPressed['d'] || keysPressed['D']) {
-                movePlayer(2.8);
-            }
-
-            const containerRect = gameCanvasContainer.getBoundingClientRect();
-
-            for (let i = activeElements.length - 1; i >= 0; i--) {
-                const el = activeElements[i];
-                
-                const fallSpeed = (el.isGood ? 3.5 : 4) * speedMultiplier;
-                el.y += fallSpeed;
-                el.rotation += el.spinSpeed;
-                
-                el.dom.style.top = `${el.y}px`;
-                el.dom.style.transform = `rotate(${el.rotation}deg)`;
-
-                // Grab floor impact
-                if (el.y > containerRect.height) {
-                    if (el.isGood) {
-                        lives--;
-                        updateGameStats();
-                        createVisualImpact(el.x, containerRect.height - 30, 'VIBE LOW! 🛑', 'text-orange-500 font-bold');
-                        if (lives <= 0) endGame();
-                    }
-                    el.dom.remove();
-                    activeElements.splice(i, 1);
-                    continue;
-                }
-
-                // Check collision with Sunglass Plate
-                const distanceX = Math.abs((el.x) - playerX);
-                if (el.y >= (containerRect.height - 65) && el.y <= (containerRect.height - 25) && distanceX < 14) {
-                    if (el.isGood) {
-                        score += el.scoreValue;
-                        createVisualImpact(el.x, el.y, `+${el.scoreValue} RAID 🕶️`, 'text-yellow-400 font-black');
-                        
-                        if (score > 0 && score % 100 === 0) {
-                            level++;
-                            speedMultiplier += 0.2;
-                            createVisualImpact(50, 150, `VIBE UP: LEVEL ${level}! 🍹`, 'text-green-400 text-3xl font-black');
-                        }
-                    } else {
-                        lives--;
-                        createVisualImpact(el.x, el.y, 'WORKED! 💼🛑', 'text-red-500 font-bold');
-                        updateGameStats();
-                        if (lives <= 0) endGame();
-                    }
-
-                    el.dom.remove();
-                    activeElements.splice(i, 1);
-                }
-            }
-        }
-
-        function createVisualImpact(percentX, clientY, text, classes) {
-            const effect = document.createElement('div');
-            effect.className = `absolute pointer-events-none text-sm z-30 transition-all duration-700 ease-out transform ${classes}`;
-            effect.style.left = `${percentX}%`;
-            effect.style.top = `${clientY}px`;
-            effect.innerText = text;
-            
-            playground.appendChild(effect);
-            
-            setTimeout(() => {
-                effect.style.top = `${clientY - 50}px`;
-                effect.style.opacity = '0';
-                setTimeout(() => effect.remove(), 700);
-            }, 10);
-        }
-
-        // Stats update visualizer
-        function updateGameStats() {
-            document.getElementById('gameScore').innerText = score;
-            document.getElementById('gameLevel').innerText = level;
-            
-            let hearts = "";
-            for (let i = 0; i < 3; i++) {
-                hearts += i < lives ? "❤️" : "🖤";
-            }
-            document.getElementById('gameLives').innerText = hearts;
-        }
-
-        function endGame() {
-            gameRunning = false;
-            clearInterval(spawnInterval);
-            clearInterval(gameLoopInterval);
-
-            document.getElementById('gameOverOverlay').classList.remove('hidden');
-            document.getElementById('finalScoreDisplay').innerText = score;
+                btn.innerText = "COPY CA";
+                btn.classList.replace("bg-green-500", "bg-white");
+            }, 2000);
         }
     </script>
 </body>
